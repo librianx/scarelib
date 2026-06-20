@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PRE-CIP-████ — 选择题</title>
+    <meta name="description" content="前置评估测试：选择题" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body.pretest-quiz {
+        background: #060607;
+        color: rgba(255, 255, 255, 0.92);
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+      body.pretest-quiz .layout {
+        display: block;
+        max-width: 980px;
+        margin: 14px auto 30px;
+        padding: 0 16px;
+      }
+      body.pretest-quiz .pageframe {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 16px;
+      }
+      body.pretest-quiz .panel {
+        background: transparent;
+        border: 0;
+        padding: 0;
+      }
+      body.pretest-quiz .panel__title {
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
+      }
+      body.pretest-quiz .footer {
+        display: none;
+      }
+
+      .qwrap {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.78);
+        padding: 12px 12px 10px;
+        overflow: auto;
+        max-height: calc(100vh - 280px);
+      }
+      .qmeta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .qmeta__id {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        opacity: 0.9;
+      }
+      .qmeta__id strong {
+        color: rgba(255, 90, 90, 0.96);
+        font-weight: 900;
+      }
+      .qmeta__hint {
+        font-family: var(--font-ui);
+        font-size: 12.5px;
+        opacity: 0.72;
+        letter-spacing: 0.6px;
+        text-align: right;
+      }
+      .qtext {
+        font-size: 15px;
+        line-height: 1.75;
+        margin-bottom: 10px;
+      }
+      .opts {
+        display: grid;
+        gap: 8px;
+      }
+      .opt {
+        text-align: left;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.62);
+        padding: 10px 10px;
+        font-family: var(--font-ui);
+        letter-spacing: 0.3px;
+        color: rgba(255, 255, 255, 0.92);
+        transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+      }
+      .opt:hover {
+        border-color: rgba(255, 90, 90, 0.32);
+        background: rgba(164, 14, 38, 0.16);
+      }
+      .opt:active {
+        transform: translateY(1px);
+      }
+      .opt__k {
+        display: inline-block;
+        width: 22px;
+        font-weight: 900;
+        color: rgba(255, 90, 90, 0.96);
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+      }
+      .processing {
+        margin-top: 10px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        letter-spacing: 0.8px;
+        opacity: 0.92;
+      }
+      .enter {
+        margin-top: 12px;
+        display: flex;
+        justify-content: flex-end;
+      }
+      .enter .ack__btn {
+        pointer-events: none;
+        opacity: 0.45;
+      }
+      .enter .ack__btn.is-ready {
+        pointer-events: auto;
+        opacity: 1;
+      }
+      .hintline {
+        margin: 8px 0 10px;
+        font-family: var(--font-ui);
+        letter-spacing: 0.6px;
+        opacity: 0.8;
+      }
+      .hintline s {
+        color: rgba(255, 90, 90, 0.96);
+        text-decoration-color: rgba(255, 90, 90, 0.75);
+      }
+    </style>
+  </head>
+  <body class="pretest-quiz">
+    <a class="skip-link" href="#content">跳到主要内容</a>
+
+    <header class="topbar" role="banner">
+      <div class="topbar__inner topbar__inner--row1">
+        <div class="brand">
+          <div class="brand__logo" aria-hidden="true">
+            <span class="brand__logoMark"></span>
+            <span class="brand__logoSpinner" aria-hidden="true" title="加载中"></span>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">■■■图书馆</div>
+            <div class="brand__tagline">遗忘，　，摧毁</div>
+          </div>
+        </div>
+        <div class="topbar__right" aria-label="顶部状态区">
+          <div class="search" aria-label="搜索（占位）">
+            <div class="search__box">检索　■■　<s>安全</s></div>
+            <div class="search__btn">提交</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="content" role="main">
+        <div class="pageframe" aria-label="选择题容器">
+          <section class="panel">
+            <h2 class="panel__title">选择题</h2>
+            <div class="hintline">请勿返回修改。<br /><s>你也回不去了。</s></div>
+
+            <div class="qwrap" aria-live="polite">
+              <div class="qmeta">
+                <div class="qmeta__id">当前题目：<strong id="q-no">1</strong>/6</div>
+                <div class="qmeta__hint" id="q-hint">点击一个选项以继续。</div>
+              </div>
+              <div class="qtext" id="q-text"></div>
+              <div class="opts" id="q-opts"></div>
+              <div class="processing" id="processing" style="display: none"></div>
+              <div class="enter" id="enter" style="display: none">
+                <a class="ack__btn" id="enter-btn" href="./ack.html" aria-disabled="true">继续至接种页面</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      (() => {
+        const questions = [
+          {
+            title: "第一题",
+            text: "你现在所处的房间里，有几扇门？",
+            opts: ["一扇。", "两扇或更多。", "我刚才确认过，但现在已经不确定了。"],
+          },
+          {
+            title: "第二题",
+            text: "你选择上一题的答案时，是否曾在脑中默数房间里的门？",
+            opts: ["是。", "否。", "我数了，但数完之后又数了一遍，数字不一样。"],
+          },
+          {
+            title: "第三题",
+            text: "以下三个陈述中，哪一项最接近你此刻的状态？",
+            opts: [
+              "我在认真地回答这些问题，没有受到干扰。",
+              "我感觉有人在背后看着我，但我没法回头确认。不确定，但做题的时候一直有这个感觉。",
+              "刚才B选项的字比其他选项长，你注意到了吗。你为什么注意到了。",
+            ],
+          },
+          {
+            title: "第四题",
+            text: "你刚才回答第三题时，是否出现以下情况——请在以下三项中选择一项：",
+            opts: [
+              "没有出现任何异常。",
+              "我选择了一个选项，但我感觉另一个选项也不对，没有正确答案。题目设计有问题。",
+              "我不确定我是不是在答题。我刚才把C读了两遍。第一遍觉得C在说我。第二遍还是觉得。我选了C。",
+            ],
+          },
+          {
+            title: "第五题",
+            text: "请在以下三项中选择一项。本题为您本次测试的最后一道选择题。",
+            opts: [
+              "我完成了测试，现在可以继续阅读档案了吗。",
+              "我总感觉刚才做选择题的时候，错过了某个选项，或者是选错了答案。这种测试有标准答案吗。",
+              "我选C。",
+            ],
+          },
+          {
+            title: "第六题",
+            text: "本题已被删除。",
+            opts: ["我明白。", "……", "删除失败。"],
+            deleted: true,
+          },
+        ];
+
+        const qNo = document.getElementById("q-no");
+        const qHint = document.getElementById("q-hint");
+        const qText = document.getElementById("q-text");
+        const qOpts = document.getElementById("q-opts");
+        const processing = document.getElementById("processing");
+        const enter = document.getElementById("enter");
+        const enterBtn = document.getElementById("enter-btn");
+
+        let audioCtx = null;
+        const ensureAudio = () => {
+          if (audioCtx) return audioCtx;
+          const Ctx = window.AudioContext || window.webkitAudioContext;
+          if (!Ctx) return null;
+          audioCtx = new Ctx();
+          return audioCtx;
+        };
+
+        const playRippedPaper = () => {
+          const ctx = ensureAudio();
+          if (!ctx) return;
+          if (ctx.state === "suspended") ctx.resume().catch(() => {});
+          const now = ctx.currentTime;
+          const dur = 0.12;
+
+          const bufferSize = Math.max(1, Math.floor(ctx.sampleRate * dur));
+          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+
+          let last = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const t = i / bufferSize;
+            const n = Math.random() * 2 - 1;
+            const hp = n - last;
+            last = n;
+            const env = Math.pow(1 - t, 2.2);
+            data[i] = hp * env * 0.85;
+          }
+
+          const src = ctx.createBufferSource();
+          src.buffer = buffer;
+
+          const bp = ctx.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(900, now);
+          bp.Q.setValueAtTime(0.9, now);
+          bp.frequency.exponentialRampToValueAtTime(2600, now + dur);
+
+          const g = ctx.createGain();
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(0.28, now + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+          src.connect(bp);
+          bp.connect(g);
+          g.connect(ctx.destination);
+          src.start(now);
+          src.stop(now + dur + 0.02);
+        };
+
+        const clearEl = (el) => {
+          while (el.firstChild) el.removeChild(el.firstChild);
+        };
+
+        const renderQuestion = (idx) => {
+          const q = questions[idx];
+          qNo.textContent = String(idx + 1);
+          qHint.textContent = "点击一个选项以继续。";
+
+          const parts = [];
+          parts.push(`<strong>${q.title}</strong><br /><br />`);
+          parts.push(q.text);
+          if (q.deleted) {
+            parts.push(
+              `<br /><br /><s>以下哪个选项是正确的？</s><br /><s>A. 这道题不应该出现在这里。</s><br /><s>B. 这道题不应该出现在这里，但我刚才看了A之后，觉得A可能不对，所以我在看B。</s><br /><s>C. 这道题不应该出现在这里。我选了上一题之后，这道题自动出现了。我还没有准备好。</s><br /><br /><s>删除失败。你刚才读到了被删除的内容。被删除的内容是：这道题不应该出现在这里。现在你已经读完了。你准备怎么办。</s>`
+            );
+          }
+          qText.innerHTML = parts.join("");
+
+          clearEl(qOpts);
+          ["A", "B", "C"].forEach((k, i) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "opt";
+            btn.innerHTML = `<span class="opt__k">${k}.</span>${q.opts[i]}`;
+            btn.addEventListener("click", () => {
+              playRippedPaper();
+              stepForward(idx);
+            });
+            qOpts.appendChild(btn);
+          });
+        };
+
+        const stepForward = (idx) => {
+          const next = idx + 1;
+          if (next < questions.length) {
+            renderQuestion(next);
+            return;
+          }
+
+          qHint.textContent = "已提交。请等待。";
+          qOpts.querySelectorAll("button").forEach((b) => (b.disabled = true));
+
+          processing.style.display = "block";
+          const lines = [
+            "测试完成",
+            "",
+            "您已回答了全部问题。系统正在处理您的答案。",
+            "",
+            "处理中……",
+            "处理中……",
+            "处理完成。",
+            "",
+            "您的答题数据未被记录。本测试不收集任何数据。",
+            "<s>收集数据的不是测试。收集数据的是题目里的选项。你每选一个，选项就认识你多一点。</s>",
+            "",
+            "请继续至模因疫苗接种页面。",
+          ];
+
+          let i = 0;
+          const tick = () => {
+            const chunk = lines.slice(0, Math.min(lines.length, i + 1));
+            processing.innerHTML = chunk.join("<br />");
+            i++;
+            if (i <= lines.length) {
+              window.setTimeout(tick, i < 7 ? 520 : 360);
+            } else {
+              enter.style.display = "flex";
+              enterBtn.classList.add("is-ready");
+              enterBtn.setAttribute("aria-disabled", "false");
+            }
+          };
+          window.setTimeout(tick, 500);
+        };
+
+        renderQuestion(0);
+      })();
+    </script>
+  </body>
+</html>
+

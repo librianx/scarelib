@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>附录：绝境研究记录 — ■■■图书馆</title>
+    <meta name="description" content="附录：绝境研究记录" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body.appendix-page {
+        background: #050607;
+        color: rgba(255, 255, 255, 0.9);
+        position: relative;
+        overflow-x: hidden;
+      }
+      body.appendix-page::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.08;
+        mix-blend-mode: screen;
+        background-image:
+          radial-gradient(circle at 20% 10%, rgba(164, 14, 38, 0.35), transparent 55%),
+          radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08), transparent 60%),
+          repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 3px);
+        background-size: auto, auto, 100% 6px;
+      }
+      body.appendix-page::after {
+        content: "";
+        position: fixed;
+        inset: -20%;
+        pointer-events: none;
+        opacity: 0.035;
+        background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.85) 72%);
+        filter: contrast(1.15);
+      }
+      body.appendix-page .layout {
+        display: block;
+        max-width: 980px;
+        margin: 14px auto 28px;
+        padding: 0 16px;
+      }
+      body.appendix-page .pageframe,
+      body.appendix-page .panel {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      body.appendix-page .pageframe {
+        padding: 18px 18px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+      }
+      body.appendix-page .panel {
+        border: 0;
+        padding: 0;
+      }
+      body.appendix-page .panel__title {
+        color: rgba(255, 255, 255, 0.86);
+        letter-spacing: 1px;
+        text-shadow: 0 0 18px rgba(164, 14, 38, 0.18);
+      }
+
+      .abyss {
+        font-family: var(--font-ui);
+        letter-spacing: 0.35px;
+        line-height: 1.85;
+        font-size: 15px;
+      }
+      #abyss-reader {
+        scroll-margin-top: 132px;
+      }
+      .abyss__meta {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.35);
+        padding: 12px 12px;
+        margin: 12px 0 14px;
+      }
+      .abyss__meta .k {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        letter-spacing: 0.6px;
+        opacity: 0.9;
+        line-height: 1.75;
+      }
+      .abyss__danger {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 90, 90, 0.22);
+        color: rgba(255, 120, 120, 0.95);
+        font-weight: 900;
+        letter-spacing: 0.8px;
+        text-shadow: 0 0 12px rgba(164, 14, 38, 0.28);
+      }
+      .abyss h3 {
+        margin: 16px 0 10px;
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.88);
+        border-left: 3px solid rgba(255, 90, 90, 0.55);
+        padding-left: 10px;
+      }
+      .abyss p {
+        margin: 10px 0;
+        color: rgba(255, 255, 255, 0.86);
+      }
+      .abyss .small {
+        opacity: 0.82;
+      }
+      .abyss .hand {
+        margin: 12px 0;
+        padding: 10px 12px;
+        border-left: 3px solid rgba(255, 90, 90, 0.55);
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.72);
+        font-style: italic;
+        font-family: "Segoe Script", "Comic Sans MS", "KaiTi", "STKaiti", "DFKai-SB", cursive;
+        letter-spacing: 0.3px;
+        transform: rotate(-0.2deg);
+      }
+      .abyss .em-red {
+        color: rgba(255, 90, 90, 0.96);
+        font-weight: 900;
+        font-family: var(--font-ui);
+        letter-spacing: 0.2px;
+        text-shadow: 0 0 12px rgba(164, 14, 38, 0.28);
+      }
+      .abyss .hand .em-red {
+        font-family: "Segoe Script", "Comic Sans MS", "KaiTi", "STKaiti", "DFKai-SB", cursive;
+        font-style: italic;
+        font-weight: 800;
+        color: rgba(255, 120, 120, 0.95);
+        text-shadow:
+          0 0 1px rgba(255, 120, 120, 0.35),
+          0 0 14px rgba(164, 14, 38, 0.22);
+      }
+      .abyss s {
+        color: rgba(255, 255, 255, 0.58);
+        text-decoration-color: rgba(255, 255, 255, 0.38);
+      }
+
+      .pager {
+        margin-top: 16px;
+        padding: 10px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.35);
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+      }
+      .pager__btn {
+        appearance: none;
+        border: 1px solid rgba(255, 90, 90, 0.45);
+        background: rgba(164, 14, 38, 0.14);
+        color: rgba(255, 230, 230, 0.96);
+        padding: 10px 12px;
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.25);
+      }
+      .pager__btn:hover {
+        border-color: rgba(255, 120, 120, 0.75);
+        background: rgba(164, 14, 38, 0.2);
+      }
+      .pager__btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        filter: grayscale(0.2);
+      }
+      .pager__meta {
+        text-align: center;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        letter-spacing: 0.8px;
+        opacity: 0.9;
+      }
+      .pager__meta strong {
+        color: rgba(255, 90, 90, 0.96);
+        font-weight: 900;
+      }
+
+      .abyss__destroy {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        justify-content: center;
+      }
+      .destroy-btn {
+        appearance: none;
+        border: 1px solid rgba(255, 90, 90, 0.75);
+        background: rgba(164, 14, 38, 0.22);
+        color: rgba(255, 235, 235, 0.98);
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 2px;
+        padding: 12px 16px;
+        cursor: pointer;
+        text-shadow: 0 0 14px rgba(164, 14, 38, 0.45);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+      }
+      .destroy-btn:hover {
+        border-color: rgba(255, 140, 140, 0.95);
+        background: rgba(164, 14, 38, 0.3);
+      }
+      .destroy-btn:active {
+        transform: translateY(1px);
+      }
+
+      @media (max-width: 720px) {
+        .pager {
+          grid-template-columns: 1fr;
+        }
+        .pager__btn {
+          width: 100%;
+        }
+        .pager__meta {
+          order: -1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        body.appendix-page::before {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="appendix-page">
+    <a class="skip-link" href="#content">跳到主要内容</a>
+
+    <header class="topbar" role="banner">
+      <div class="topbar__inner topbar__inner--row1">
+        <div class="brand">
+          <div class="brand__logo" aria-hidden="true">
+            <span class="brand__logoMark"></span>
+            <span class="brand__logoSpinner" aria-hidden="true" title="加载中"></span>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">■■■图书馆</div>
+            <div class="brand__tagline">遗忘，　，摧毁</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="content" role="main">
+        <div class="pageframe">
+          <section class="panel">
+            <h2 class="panel__title">附录：绝境研究记录</h2>
+
+            <div class="abyss" id="abyss-reader" aria-live="polite"></div>
+
+            <nav class="pager" aria-label="绝境研究记录翻页">
+              <button type="button" class="pager__btn" id="abyss-prev">上一页</button>
+              <div class="pager__meta" id="abyss-counter"><strong>1</strong> / 8</div>
+              <button type="button" class="pager__btn" id="abyss-next">下一页</button>
+            </nav>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      (() => {
+        const reader = document.getElementById("abyss-reader");
+        const prev = document.getElementById("abyss-prev");
+        const next = document.getElementById("abyss-next");
+        const counter = document.getElementById("abyss-counter");
+        if (!reader || !prev || !next || !counter) return;
+
+        let audioCtx = null;
+        const playPageTurn = async (dir) => {
+          try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state !== "running") await audioCtx.resume();
+          } catch {
+            return;
+          }
+
+          const t0 = audioCtx.currentTime;
+          const dur = 0.09;
+
+          const bufSize = Math.max(1, Math.floor(audioCtx.sampleRate * dur));
+          const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+          const data = buf.getChannelData(0);
+          for (let i = 0; i < bufSize; i++) {
+            const n = Math.random() * 2 - 1;
+            const env = Math.pow(1 - i / bufSize, 1.35);
+            data[i] = n * env * 0.95;
+          }
+
+          const src = audioCtx.createBufferSource();
+          src.buffer = buf;
+
+          const hp = audioCtx.createBiquadFilter();
+          hp.type = "highpass";
+          hp.frequency.setValueAtTime(900, t0);
+
+          const bp = audioCtx.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(dir < 0 ? 2200 : 2600, t0);
+          bp.Q.setValueAtTime(1.1, t0);
+
+          const g = audioCtx.createGain();
+          g.gain.setValueAtTime(0.0001, t0);
+          g.gain.exponentialRampToValueAtTime(0.09, t0 + 0.006);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+          const click = audioCtx.createOscillator();
+          click.type = "square";
+          click.frequency.setValueAtTime(dir < 0 ? 1650 : 2050, t0);
+          const cg = audioCtx.createGain();
+          cg.gain.setValueAtTime(0.0001, t0);
+          cg.gain.exponentialRampToValueAtTime(0.035, t0 + 0.004);
+          cg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.035);
+          click.connect(cg);
+          cg.connect(g);
+
+          src.connect(hp);
+          hp.connect(bp);
+          bp.connect(g);
+          g.connect(audioCtx.destination);
+
+          src.start(t0);
+          click.start(t0);
+          src.stop(t0 + dur + 0.02);
+          click.stop(t0 + 0.05);
+        };
+
+        const pages = [
+          {
+            html: `
+              <div class="abyss__meta">
+                <div class="k"><strong>档案编号</strong>：███-DESPERATE-████</div>
+                <div class="k"><strong>密级</strong>：已销毁——本附录在归档时被判定为“超出伦理边界”，原文件已下令销毁。以下内容为销毁执行人在执行销毁前私自保存的副本。</div>
+                <div class="k"><strong>保存人</strong>：[已移除]</div>
+                <div class="k"><strong>保存人备注</strong>：后人应知道我们曾尝试过什么。</div>
+                <div class="abyss__danger">警示：以下内容包含对极端实验的详细描述。阅读者若出现生理不适，请停止阅读。若继续阅读，请勿在阅读后声称未被警告。</div>
+              </div>
+            `,
+          },
+          {
+            html: `
+              <h3>引言</h3>
+              <p>在常规收容手段——信息管制、叙事替代、开放竞争、平台删除——全部以失败告终之后，███研究中心进入了一段不再以“收容”为目标的时期。</p>
+              <p>此时期的核心假设是：既然异常以恐惧叙事为营养，那么是否存在某种手段，可以切断营养供给，或反过来利用营养供给机制毒杀异常，或在供给端制造某种异常无法消化或消化后自我毁灭的物质？</p>
+              <p>以下为这一时期的研究记录。所有实验均未取得预期效果。所有实验均造成了不可逆的后果。</p>
+              <p class="small">研究代号被有意从档案中删除。以下记录中的代号均为保存人根据实验内容自行标注。</p>
+            `,
+          },
+          {
+            html: `
+              <h3>绝境研究一：空白叙事</h3>
+              <div class="abyss__meta">
+                <div class="k"><strong>代号</strong>：BLANK-SCRIPT-01</div>
+                <div class="k"><strong>时间</strong>：198█年█月至198█年█月</div>
+                <div class="k"><strong>地点</strong>：██████</div>
+              </div>
+              <h3>假设</h3>
+              <p>异常依赖恐惧叙事传播。恐惧叙事依赖人类产生。如果彻底切断人类接触恐惧叙事的渠道，异常是否将因营养断绝而衰竭？</p>
+              <h3>实验设计</h3>
+              <p>从全球范围内筛选120名受试者。筛选标准：高叙事敏感度、既往有焦虑障碍史、无紧密社会关系。</p>
+              <p>受试者被分为四组，每组30人。全部受试者在不知情的情况下被转移至地下隔离设施，每人单间，房间隔音，无窗，24小时照明。</p>
+              <p>A组（完全叙事剥夺）：房间内无任何可被解读为叙事的物品。墙壁为均匀灰色。食物为营养糊剂，无形状无气味。无声音。无文字。无图像。受试者之间完全隔离。每日通过管道输送食物。无人与其交谈。</p>
+              <p>B组（无恐惧叙事）：房间内提供经筛选的叙事材料——纯描述性文本（气象报告、几何学教材、零件目录）。所有材料经五人小组逐句审核，确保不含任何可被解读为威胁、冲突、悬念或情绪波动的内容。</p>
+              <p>C组（叙事充盈对照）：房间内提供正常图书、电视、广播。内容未经筛选。允许受试者自由阅读和观看。</p>
+              <p>D组（恐惧叙事饱和）：房间内只提供恐惧叙事材料——恐怖小说、灾难纪录片、犯罪报道、民间恐怖故事集。每日更新。全部为未定义威胁型或威胁未解除型叙事。</p>
+              <p>实验周期：六个月。受试者在进入前被告知将参与一项“封闭环境下的认知适应研究”，自愿签署知情同意书。知情同意书未告知隔离的真实性质。</p>
+            `,
+          },
+          {
+            html: `
+              <h3>观测指标</h3>
+              <p>焦虑水平（通过内嵌在床垫中的心率传感器连续监测）</p>
+              <p>语言产生量（通过室内麦克风记录受试者自发言语）</p>
+              <p>叙事需求（受试者请求额外叙事材料的次数）</p>
+              <h3>结果</h3>
+              <p>A组：第3日，受试者开始出现自发言语增多。受试者对自己说话。第7日，30人全部出现不同程度的自发叙事生产——受试者开始给自己讲故事。有受试者开始对墙壁讲述自己童年的经历。有受试者编造了一个关于“外面那些人为什么要把我关在这里”的叙事。该叙事在无任何外部信息输入的情况下自发产生。第21日，一名受试者用指甲在墙壁上刻下第一行字：“他们在看着我。”该句被刻在没有任何监控摄像头的墙壁上。</p>
+              <p>B组：前两周正常。第17日，受试者开始在零件目录中寻找“隐藏信息”。有受试者声称在几何学教材的图例中发现了“重复出现的脸”。第30日，B组受试者的焦虑水平与C组（正常叙事）无统计显著差异——受试者将非恐惧叙事材料重新解读为恐惧叙事。</p>
+              <p>C组：焦虑水平维持在社会基线水平。无异常。</p>
+              <p>D组：前两周焦虑水平显著上升。第28日，15名受试者出现同类现象：恐惧叙事消费量自发下降。受试者不再恐惧恐惧叙事。受试者的原话是：“没感觉了。换一个。”第35日，全部30人达到此状态。恐惧叙事的恐惧唤醒效力在持续暴露下递减至零。</p>
+            `,
+          },
+          {
+            html: `
+              <h3>实验结论</h3>
+              <p>完全剥夺叙事，人类大脑将自发生产叙事填补空白。无法依靠剥夺来断绝异常的营养供给。剥夺创造空白，空白催生新叙事。新叙事以最快的速度变更为恐惧叙事——实验中被关在灰色房间里的受试者，他们编造的第一个故事无一例外是关于“为什么我被关在这里”的。</p>
+              <p>提供无恐惧叙事，人类大脑将恐惧解读进无恐惧的材料中。恐惧不是内容。恐惧是解读方式。</p>
+              <p>持续暴露于恐惧叙事，恐惧唤醒效力递减至零。递减并非免疫——是受体饱和。饱和后的受试者需要更高强度的恐惧刺激才能体验到之前的唤醒水平。</p>
+              <p>综合以上三点：恐惧叙事的生产无法停止，恐惧的解读无法阻止，恐惧的刺激效力需要不断升级才能维持。这三个条件形成了一个自我加速的循环。异常不活在任何一个条件里。异常活在这个循环的加速过程中。</p>
+              <h3>实验后处理</h3>
+              <p>A组受试者在实验结束时已全部出现严重的精神症状。其中7名无法区分隔离期间的幻想与现实。其中1名在释放后一个月声称“那间灰色房间还在我脑子里。我晚上闭上眼睛，墙壁还是灰色的”。</p>
+              <p>B组受试者无严重精神症状。释放后三个月回访，其中4名报告对零件目录、几何学教材、气象报告产生“无法解释的厌恶感”。无法解释，但厌恶水平在回访时仍未减弱。</p>
+              <p>D组受试者在释放后三个月回访中报告：日常生活不再引起恐惧反应。其中一名受试者在回访前一周遭遇了一次真实的物理危险——行人路口险些被失控车辆撞击。受试者描述当时的感受为：“我看着他朝我撞过来。我想我应该害怕。但我没有。我只是站在那里。有人在尖叫。我觉得那个尖叫声没有意义。”（该受试者未被车辆撞到。）</p>
+              <h3>保存人备注</h3>
+              <p>我必须在这里停下来陈述一个我在整理这些材料时反复想到的事实。</p>
+              <p>这些实验是███研究中心历史上最黑暗的几页。但阅读这些记录时，最令人不安的不是它们残忍。残忍是人类的本行。最令人不安的是：</p>
+              <p>所有这些实验——每一个——在技术上都是严谨的。假设清晰。设计合理。数据完整。结论经得起检验。</p>
+              <p>它们在方法上是完美的。</p>
+              <p>完美的残忍，依旧是残忍。但完美的残忍让人无法用“不科学”来否定它的结论。</p>
+              <p>这就是为什么我们必须读下去。</p>
+            `,
+          },
+          {
+            html: `
+              <h3>绝境研究二：叙事切除</h3>
+              <div class="abyss__meta">
+                <div class="k"><strong>代号</strong>：NARRATIVE-LOBOTOMY-01</div>
+                <div class="k"><strong>时间</strong>：199█年█月至199█年█月</div>
+                <div class="k"><strong>地点</strong>：[已编辑]神经外科研究中心</div>
+              </div>
+              <h3>背景</h3>
+              <p>空白叙事实验之后，研究中心内部出现了一个新的研究方向：如果无法在内容层面解决恐惧叙事，是否可以在生理层面切除叙事能力本身？</p>
+              <h3>假设</h3>
+              <p>人类叙事能力的神经基础是可定位、可切除的。如果可以切除叙事能力，是否可以永久性地使个体无法成为异常的宿主——从而至少制造一批“免疫个体”？</p>
+              <h3>实验设计</h3>
+              <p>实验动物：成年恒河猴。其叙事能力通过与对照组的符号指涉行为比较来定义。</p>
+              <p>实验成功后，人体实验开始。受试者为10名终末期绝症患者，均为自愿签署知情同意书。其中5名具有高叙事敏感度（作家、编剧、记者），5名为低叙事敏感度（均自述“很少读书”“不怎么看电影”“不会讲故事”）。</p>
+              <p>手术方案：对左侧大脑半球语言相关区域进行系统性损毁，范围超出常规语言区，扩展至额叶前部叙事整合相关区域。术后进行叙事能力评估、情绪反应评估、社会行为评估。</p>
+              <h3>结果</h3>
+              <p>10名受试者中有8名术后丧失了叙事能力。表现为：能够识别单个词汇，但无法理解句子之间的因果连接；能够描述当下感知（“杯子”“水”“喝”），但无法将其组织为叙事（“我刚才喝了一杯水”）；能够感受到恐惧的生理唤醒，但无法回答“你为什么害怕”——不是因为害怕到说不出来，而是“为什么”这个结构在他们的认知中不再存在。</p>
+              <p>能够识别危险，做出规避行为，但无法在危险解除后向他人描述危险。无法参与任何形式的叙事传播。</p>
+              <p>感染指标方面：8名成功切除叙事能力的受试者在其后三年追踪期内，未再产生任何可被异常利用的恐惧叙事。</p>
+              <h3>实验结论</h3>
+              <p>从功能角度看，叙事切除确实是目前记录中唯一有效的干预手段。它有效切断了异常利用特定个体的所有渠道。</p>
+            `,
+          },
+          {
+            html: `
+              <h3>实验后处理</h3>
+              <p>研究中心伦理委员会否决了将此方案推广至健康人群的任何动议。</p>
+              <p>195█年代曾有过更大规模的切除计划构想。该构想未进入实验阶段——不是因为伦理障碍，而是因为计算表明：要使人类整体的恐惧叙事产量低于异常维持阈值，需要切除的人口比例超过53%。全球手术能力在可预见的未来无法达到此规模。</p>
+              <p>该构想被放弃。不是因为人类良心发现。是因为数学不支持。</p>
+              <h3>关键陈述</h3>
+              <p>以下摘录自8名成功接受叙事切除的受试者的追踪访谈。访谈主持人为Dr.███████。</p>
+              <p>Dr. ███████：你害怕吗？</p>
+              <p>受试者A（前新闻记者）：不。</p>
+              <p>Dr. ███████：你记得“害怕”的感觉吗？</p>
+              <p>受试者A：记得，但不害怕。我记得以前写完稿子怕发不出去的样子，紧张，手出汗。我记得那种害怕。但现在想到这件事，手不出汗。它只是一个事实。我以前害怕过。现在它只是我以前做过的一件事。就像上个星期二吃了一个苹果。</p>
+              <p>Dr. ███████：你觉得你失去了什么吗？</p>
+              <p>受试者A：（长时间停顿）失去了担心。失去了担心明天的稿子、担心儿子发烧、担心晚上接不到电话。</p>
+              <p>（停顿。）</p>
+              <p>你知道担心是什么吗。担心就是你坐在椅子上，但你的脑子已经跑到了明天晚上。以前我一天跑几十趟。早上喝咖啡的时候在担心下午交稿。下午交稿的时候在担心晚上儿子有没有好好吃饭。</p>
+              <p>现在我的脑子就在椅子上。</p>
+              <p>（停顿。）</p>
+              <p>别人觉得这是平的。我觉得是静的。</p>
+              <p>（停顿。）</p>
+              <p>你们想要回来吗，担心？你们每天都在担心，你们不觉得多吗。</p>
+              <p>（停顿结束，访谈结束。）</p>
+              <div class="hand">
+                这段访谈是整份档案里我最不敢读第二遍的部分。不是因为恐怖。是因为他说“我现在就在椅子上”。我当时读到这一句的时候，坐在椅子上哭了。我不知道为什么。我是在为他难过吗？还是在为我不能像他一样安静地坐在椅子上而难过？<br /><br />
+                已经两个星期了。我还在想这句话。如果我被切除了，我也会一样平静。<br /><br />
+                <span class="em-red">但我不记得是谁说的了。</span>
+              </div>
+            `,
+          },
+          {
+            html: `
+              <h3>绝境研究三：终极方案：普罗米登斯计划</h3>
+              <div class="abyss__meta">
+                <div class="k"><strong>代号</strong>：PROJECT-PROVIDENCE</div>
+                <div class="k"><strong>时间</strong>：200█年█月至200█年█月（计划阶段）→ 同年度被███否决，未执行超出计算机建模的阶段。</div>
+                <div class="k"><strong>地点</strong>：███研究中心</div>
+                <div class="k"><strong>设计者</strong>：Dr.██████、Dr.███████、███人组成的特别委员会</div>
+              </div>
+              <h3>背景</h3>
+              <p>在常规收容和防御性介入均告失败、异常持续通过提供不断升级的恐惧叙事来汲取人类注意力资源的大背景下，一部分最高级别的研究者提出了被称为“终极收容”的设计思路：既然任何主动行为都在喂养异常的任何正常形式的恐惧叙事都是有养料的，那么有没有任何办法，从根本上——不是收容异常——是直接抹除其生存条件？</p>
+              <h3>假设（摘要版）</h3>
+              <p>恐惧叙事系统的一个深层结构性缺陷在于：它依靠分散恐惧来维持运转。如果全人类的恐惧不再分散，而是像汇聚成熔炉一样集中在某一个点上，且这个点能够提供异常完全无法消化和利用的绝对恐惧形态的话，那么这个异常系统会不会就此自行崩溃？</p>
+              <p>由此推出的结论是：需要一个在恐惧程度和持续时间上完全超越目前人类已知的所有恐惧叙事叠加总和的事件——一个被研究者称为“恐惧饱和终末事件”的东西。</p>
+              <h3>方案设计（摘要版）</h3>
+              <p>计划核心是利用当时人类所掌握的最大规模毁灭手段，在全球的多个关键节点同时制造一系列足以引发人类文明几近灭亡的巨大灾难。该计划在设计文档中被命名为“普罗米登斯”——一种远古的火，彻底点燃之后，用更大的恐惧烧毁之前所有恐惧的养料循环。预期效果为此次事件后，人类的恐惧将达到前所未有的峰值，然后在极短时间内失去大部分宿主系统，使异常随着养料供给的物理性终止而陷入最终的热寂。</p>
+              <p>计划详细说明了节点选址范围、灾难传播模型，以及在“恐惧浓度极高的人类终端”被大规模抹除后异常能量场的消亡阈值推演。</p>
+              <h3>模型推演结果</h3>
+              <p>三台独立的大型计算机在同等参数下进行了推演。推演结果显示，该事件能够有效摧毁异常的概率不足██%。超过███%的推演显示，在此事件中及在此事件后的一段延续时间之内，集中产生的大量叙事性恐惧会在物理宿主尚未彻底消亡前向异常供给空前巨大的能量——导致异常的强度和其行为模式的偏移跳跃至一个完全不可预测的新阶段（被计算机模型标记为“无可用数据”）。</p>
+              <p>此外，所有模型均预测了一个次生效应：如果幸存者数量不足以维持原文明对异常的记忆和研究，则异常的失控将进入不可观测期，即有可能会在信息中断期后在任何地点以任何方式出现，而不再有任何现存的组织能够重新认识和应对它。</p>
+            `,
+          },
+          {
+            html: `
+              <h3>方案否决</h3>
+              <p>███人组成的特别委员会对方案进行了为期██天的讨论。否决票██，赞成票██，弃权票██。方案被否决。否决的首要理由不是伦理——伦理问题在讨论第一天就已充分辩论，委员会中超过半数成员在讨论后仍表示愿意承担道德后果。否决的首要理由是：数学模型不支持方案能达到预期目的。</p>
+              <h3>否决后处理</h3>
+              <p>方案被否决后，███研究中心内部发生了计划泄密，随后███出现了一次自成立以来规模最大的内部清洗，所有收到计划完整密级文本、完整看过推演数据结果的成员都被要求在强制心理干预与离职之间选择一个选项。大多数人选择了离职。方案文本从物理和数字层面被彻底销毁，所有备份都必须交由专人进行核验。对此唯一保留下来的碎片即为本附录的备注文本，保存人无法确认碎片就一定是原文本，也不确定这些碎片是否已被修改。</p>
+              <h3>保存人备注</h3>
+              <p>“普罗米登斯”计划是███人在彻底绝望时提出的。他们不是疯子。他们是在面对一个无法打败、无法收容、无法影响、把人类所有自救努力全部吃掉的东西，才会动用一个被普遍视作不可用的手段。这才是他们最害怕的——不是道德带来的恐怖，而是连道德都无法奏效才选择的放弃道德。</p>
+              <p>更深的备注：在这样一份以“反对它”开始的行动记录的最后——人类仅仅在思考如何扑灭一场真实的恐惧之火时——就真的严肃地讨论了烧死那些他们认为可以烧死的人。</p>
+              <p>这就是异常。它还没有杀死我们，我们已经开始替它杀死我们自己了。</p>
+              <div class="hand">
+                普罗米登斯。他们给它起了一个神的名字。不是因为他们觉得自己像神。是因为他们知道这个计划一旦执行，他们就是魔鬼。魔鬼需要神的名字来骗自己。<br /><br />
+                我以前认识一个人。他说他也参与过这个计划的讨论。不是设计。只是讨论。他说他们在会议室里坐了一个月，讨论应该先摧毁哪几个城市。不是用炸弹。是用恐惧——在每一个城市制造一个无法被定义的、永不结束的、让所有幸存者每天夜里都在想的恐惧。用恐惧杀死恐惧。用异常杀死异常。<br /><br />
+                他说那一个月里，他每天回家看到他的孩子，就在想：这个孩子在我的名单上吗。不是因为他把孩子的名字写上去了。是因为他没有办法不这样想。那个想法自己来了，每天晚上在他给孩子盖被子的时候出现。你刚读到的那个普罗米登斯计划，一个文字实验，一个灭绝实验——它已经在测试者的脑子里先灭绝了所有人。至少先灭绝了一个人心里所有能够安睡的部分。<br /><br />
+                这就是异常吃的晚餐。不是恐惧。是我们为了对抗恐惧变成的东西。<span class="em-red">它坐在餐桌对面，看着我们一点一点变成它。然后它吃掉我们变成的那部分。我们剩下的部分再继续变。</span>
+              </div>
+              <div class="abyss__destroy">
+                <a class="destroy-btn" href="./neutralized-cover.html">销毁</a>
+              </div>
+            `,
+          },
+        ];
+
+        let idx = 0;
+
+        const render = () => {
+          reader.innerHTML = pages[idx].html;
+          counter.innerHTML = `<strong>${idx + 1}</strong> / ${pages.length}`;
+          prev.disabled = idx === 0;
+          next.disabled = idx === pages.length - 1;
+        };
+
+        const go = async (delta) => {
+          const nextIdx = idx + delta;
+          if (nextIdx < 0 || nextIdx > pages.length - 1) return;
+          await playPageTurn(delta);
+          idx = nextIdx;
+          render();
+          window.requestAnimationFrame(() => {
+            const topbar = document.querySelector(".topbar");
+            const barH = topbar ? topbar.getBoundingClientRect().height : 0;
+            const pad = 14;
+            const y = reader.getBoundingClientRect().top + window.scrollY - barH - pad;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+          });
+        };
+
+        prev.addEventListener("click", () => {
+          go(-1);
+        });
+        next.addEventListener("click", () => {
+          go(1);
+        });
+
+        window.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") go(-1);
+          if (e.key === "ArrowRight") go(1);
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>

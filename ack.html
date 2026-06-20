@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>模因疫苗注射确认页 — ■■■图书馆</title>
+    <meta name="description" content="模因疫苗注射确认页" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body.ack-page {
+        background: #050607;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      body.ack-page .pageframe,
+      body.ack-page .panel,
+      body.ack-page .hero {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      body.ack-page .hero__seal,
+      body.ack-page .panel__title,
+      body.ack-page .news__date {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      body.ack-page .hero__h1--secret {
+        color: rgba(255, 255, 255, 0.92);
+        letter-spacing: 1px;
+      }
+      body.ack-page .notice {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.16);
+        color: rgba(255, 255, 255, 0.88);
+      }
+      body.ack-page .notice--light {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+      body.ack-page .footer {
+        color: rgba(255, 255, 255, 0.62);
+      }
+      body.ack-page .footer__link {
+        color: rgba(255, 255, 255, 0.82);
+      }
+      body.ack-page s {
+        color: rgba(255, 255, 255, 0.58);
+        text-decoration-color: rgba(255, 255, 255, 0.38);
+      }
+      body.ack-page .layout {
+        /* override global 2-col grid: single column centered */
+        display: block;
+        max-width: 980px;
+        margin: 14px auto 28px;
+        padding: 0 16px;
+      }
+      body.ack-page .pageframe {
+        padding: 22px 22px 18px;
+      }
+      .cip-danger {
+        color: rgba(255, 80, 80, 0.98);
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.45);
+      }
+      .cip-meta {
+        line-height: 1.7;
+      }
+      .cip-meta strong {
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+      }
+      .cip-bar {
+        font-family: var(--font-ui);
+        letter-spacing: 2px;
+        margin: 10px 0;
+      }
+      .cip-start {
+        margin: 10px 0 8px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .cip-start__btn {
+        appearance: none;
+        border: 1px solid rgba(255, 80, 80, 0.65);
+        background: rgba(164, 14, 38, 0.18);
+        color: rgba(255, 230, 230, 0.96);
+        padding: 8px 12px;
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+      }
+      .cip-start__btn:hover {
+        background: rgba(164, 14, 38, 0.24);
+      }
+      .cip-start__btn:disabled {
+        cursor: default;
+        opacity: 0.55;
+      }
+      .cip-start__hint {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        opacity: 0.85;
+        letter-spacing: 0.6px;
+      }
+      .cip-sigil {
+        display: inline-block;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .cip-sigil.blinking {
+        animation: cip-blink 0.45s steps(1, end) infinite;
+      }
+      @keyframes cip-blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.25;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .cip-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .cip-actions .ack__btn {
+        min-width: 160px;
+        text-align: center;
+      }
+      .cip-actions .ack__btn[aria-disabled="true"] {
+        opacity: 0.45;
+        pointer-events: none;
+        filter: grayscale(0.2);
+      }
+    </style>
+  </head>
+  <body class="ack-page">
+    <a class="skip-link" href="#content">跳到主要内容</a>
+
+    <header class="topbar" role="banner">
+      <div class="topbar__inner topbar__inner--row1">
+        <div class="brand">
+          <div class="brand__logo" aria-hidden="true">
+            <span class="brand__logoMark"></span>
+            <span class="brand__logoSpinner" aria-hidden="true" title="加载中"></span>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">■■■图书馆</div>
+            <div class="brand__tagline">遗忘，　，摧毁</div>
+          </div>
+        </div>
+
+        <div class="topbar__right" aria-label="顶部状态区">
+          <div class="search" aria-label="搜索（占位）">
+            <div class="search__box">检索　■■　<s>安全</s></div>
+            <div class="search__btn">提交</div>
+          </div>
+          <div class="account">
+            <span class="account__link">建立账户</span>
+            <span class="account__sep">或</span>
+            <span class="account__link">登入</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar__nav" aria-label="顶栏导航（占位）">
+        <div class="topbar__inner topbar__inner--row2">
+          <a class="topnav__item" href="./index.html">封锁</a>
+          <a class="topnav__item" href="./index.html">通告</a>
+          <a class="topnav__item" href="./observe.html">观察</a>
+          <a class="topnav__item topnav__item--record" href="./record.html">记录</a>
+          <a class="topnav__item" href="./index.html">误传</a>
+          <a class="topnav__item" href="./index.html">处置</a>
+          <a class="topnav__item" href="./index.html">指导</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="content" role="main">
+        <div class="pageframe" aria-label="页面主体容器">
+          <section class="hero hero--secret">
+            <div class="hero__seal" aria-hidden="true">模因疫苗注射确认页</div>
+            <h1 class="hero__h1 hero__h1--secret">接种确认</h1>
+            <div class="hero__sub"><span class="cip-danger">请勿跳过接种程序</span></div>
+          </section>
+
+          <section class="panel">
+            <h2 class="panel__title">认知免疫接种协议（Cognitive Inoculation Protocol）</h2>
+
+            <div class="notice">
+              <div class="cip-meta">
+                <strong>项目名称</strong>：认知免疫接种协议（Cognitive Inoculation Protocol）<br />
+                <strong>疫苗编号</strong>：CIP-████-K<br />
+                <strong>接种状态</strong>：<span id="cip-status">[待确认]</span>
+              </div>
+            </div>
+
+            <div class="notice notice--light">
+              警告：<span class="cip-danger">请勿跳过接种程序</span><br /><br />
+              您现在即将接触的档案含有一类已被记录的认知模因残留。虽然该模因的活跃期已被判定为结束，但根据《认知安全协议》第██条，所有接触者必须在阅读前完成模因疫苗接种。<br /><br />
+              未经疫苗接种而直接阅读档案，可能导致以下症状：<br />
+              - 后续48小时内对叙事类文本的过度警觉<br />
+              - 入睡前对环境中细微声响的异常注意<br />
+              - 阅读过程中难以定位的轻度焦虑<br /><br />
+              上述症状均在72小时内自行消退。但接种疫苗可将其缩短至2小时以内。
+            </div>
+
+            <div class="notice">
+              <strong>接种说明</strong><br />
+              请注视下方提示符。提示符闪烁停止后，疫苗接种完成。接种后请等待至少30秒后再进入档案。
+              <div class="cip-start">
+                <button type="button" class="cip-start__btn" id="cip-start">开始接种</button>
+                <div class="cip-start__hint" id="cip-start-hint">等待开始。</div>
+              </div>
+              <div class="cip-bar">
+                <span id="cip-sigil" class="cip-sigil">▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊▊</span>
+              </div>
+              <div id="cip-phase" style="display: none">[闪烁中……]</div>
+              <div id="cip-done" style="display: none; margin-top: 8px">
+                [闪烁停止。]<br /><br />
+                <strong>接种完成</strong><br />
+                您的模因免疫屏障已建立。您可以安全阅读以下档案。<br />
+                <s>屏障不阻挡。屏障标记。</s><br /><br />
+                请注意：本页面的上述警告文字本身不含模因成分。<br />
+                <s>不含吗。</s><br /><br />
+                请翻页。<br />
+                <s>请翻页不是指令。是预言。你刚才翻了吗。</s><br /><br />
+                <strong>[接种完成确认码]</strong>：███-████-███<br />
+                <strong>[有效期]</strong>：本次阅读结束前<br />
+                <strong>[安全声明]</strong>：您已履行了作为认知安全参与者的全部法律义务。您现在有权获知以下档案的全部内容。请继续。请。<br />
+                <s>有权获知。有权被获知。</s>
+              </div>
+            </div>
+
+            <div class="cip-actions">
+              <a class="ack__btn" href="./dossier.html" id="cip-enter" aria-disabled="true">进入档案</a>
+              <a class="ack__btn" href="./index.html">返回首页</a>
+            </div>
+          </section>
+
+          <footer class="footer" role="contentinfo">
+            <div class="footer__inner">
+              <div class="footer__line">© ■■■图书馆</div>
+            </div>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      (() => {
+        const startBtn = document.getElementById("cip-start");
+        const startHint = document.getElementById("cip-start-hint");
+        const sigil = document.getElementById("cip-sigil");
+        const phase = document.getElementById("cip-phase");
+        const done = document.getElementById("cip-done");
+        const status = document.getElementById("cip-status");
+        const enter = document.getElementById("cip-enter");
+
+        // Keep it serious: a short, deterministic "inoculation" window.
+        const inoculationMs = 10_000;
+
+        // "Old electronic" tone: requires user gesture in most browsers.
+        let audioCtx = null;
+        let beepInterval = null;
+        const startBeepLoop = async () => {
+          try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state !== "running") await audioCtx.resume();
+          } catch {
+            return;
+          }
+          if (beepInterval) return;
+          const beepOnce = () => {
+            if (!audioCtx || audioCtx.state !== "running") return;
+            const t0 = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const lp = audioCtx.createBiquadFilter();
+
+            // harsh + retro
+            osc.type = "square";
+            osc.frequency.setValueAtTime(1040 + Math.random() * 40, t0);
+            osc.detune.setValueAtTime(-40 + Math.random() * 80, t0);
+
+            lp.type = "lowpass";
+            lp.frequency.setValueAtTime(2800, t0);
+            lp.Q.setValueAtTime(1.2, t0);
+
+            // envelope: clicky attack, short sustain
+            gain.gain.setValueAtTime(0.0001, t0);
+            gain.gain.exponentialRampToValueAtTime(0.08, t0 + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+
+            osc.connect(lp);
+            lp.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(t0);
+            osc.stop(t0 + 0.2);
+          };
+
+          // irregular spacing feels more unsettling
+          beepOnce();
+          beepInterval = window.setInterval(() => {
+            if (!sigil.classList.contains("blinking")) return;
+            beepOnce();
+          }, 700);
+        };
+
+        let started = false;
+        const finish = () => {
+          sigil.classList.remove("blinking");
+          phase.style.display = "none";
+          done.style.display = "block";
+          status.textContent = "[已确认]";
+          enter.setAttribute("aria-disabled", "false");
+          enter.removeAttribute("aria-disabled");
+          if (startHint) startHint.textContent = "完成。";
+          if (beepInterval) {
+            window.clearInterval(beepInterval);
+            beepInterval = null;
+          }
+        };
+
+        const start = async () => {
+          if (started) return;
+          started = true;
+          if (startBtn) startBtn.disabled = true;
+          if (startHint) startHint.textContent = "已开始。请注视提示符。";
+          status.textContent = "[进行中]";
+          phase.style.display = "block";
+          sigil.classList.add("blinking");
+          await startBeepLoop();
+          window.setTimeout(finish, inoculationMs);
+        };
+
+        if (startBtn) startBtn.addEventListener("click", start);
+      })();
+    </script>
+  </body>
+</html>
+

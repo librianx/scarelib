@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>项目无效化档案 — ■■■图书馆</title>
+    <meta name="description" content="项目无效化档案（Neutralized）" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body.cover-page {
+        background: #f6f6f6;
+        color: var(--ink);
+      }
+      body.cover-page .layout {
+        display: block;
+        max-width: 980px;
+        margin: 14px auto 28px;
+        padding: 0 16px;
+      }
+      body.cover-page .pageframe {
+        background: #ffffff;
+        border: 1px solid rgba(120, 120, 120, 0.35);
+        padding: 18px 18px 14px;
+      }
+      body.cover-page .panel {
+        background: transparent;
+        border: 0;
+        padding: 0;
+      }
+      body.cover-page .panel__title {
+        color: rgba(31, 35, 40, 0.92);
+      }
+      .cover-doc {
+        font-family: var(--font);
+        line-height: 1.85;
+        font-size: 15px;
+        color: rgba(31, 35, 40, 0.92);
+      }
+      .cover-doc h2 {
+        margin: 18px 0 10px;
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 0.6px;
+        font-size: 16px;
+        border-bottom: 1px solid rgba(120, 120, 120, 0.35);
+        padding-bottom: 8px;
+      }
+      .cover-doc h3 {
+        margin: 16px 0 10px;
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 0.4px;
+        font-size: 14px;
+      }
+      .cover-doc p {
+        margin: 10px 0;
+      }
+      .cover-doc .meta {
+        border: 1px solid rgba(120, 120, 120, 0.35);
+        background: #f7f7f7;
+        padding: 12px 12px;
+        line-height: 1.75;
+        font-family: var(--font-ui);
+        letter-spacing: 0.2px;
+      }
+      .cover-doc .meta strong {
+        font-weight: 900;
+      }
+      .cover-doc .qa {
+        border: 1px solid rgba(120, 120, 120, 0.35);
+        background: #ffffff;
+        padding: 12px 12px;
+        margin: 12px 0;
+      }
+      .cover-doc .qa__q {
+        font-family: var(--font-ui);
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .cover-doc .small {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .cover-doc .pencil {
+        margin-top: 14px;
+        padding: 10px 12px;
+        border-left: 3px solid rgba(120, 120, 120, 0.55);
+        background: rgba(246, 248, 250, 0.95);
+        color: rgba(31, 35, 40, 0.78);
+        font-style: italic;
+        font-family: "Segoe Script", "Comic Sans MS", "KaiTi", "STKaiti", "DFKai-SB", cursive;
+        letter-spacing: 0.25px;
+        transform: rotate(-0.15deg);
+      }
+      .cover-doc .em-red {
+        color: rgba(164, 14, 38, 0.96);
+        font-weight: 900;
+        font-style: normal;
+        font-family: var(--font-ui);
+        letter-spacing: 0.2px;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.18);
+      }
+      /* Inside handwritten pencil notes: keep it looking like red pencil, not "system UI red" */
+      .cover-doc .pencil .em-red {
+        color: rgba(190, 52, 52, 0.92);
+        font-weight: 800;
+        font-style: italic;
+        font-family: "Segoe Script", "Comic Sans MS", "KaiTi", "STKaiti", "DFKai-SB", cursive;
+        letter-spacing: 0.35px;
+        text-shadow:
+          0 0 1px rgba(190, 52, 52, 0.35),
+          0 1px 0 rgba(255, 255, 255, 0.22),
+          0 0 10px rgba(190, 52, 52, 0.12);
+        transform: rotate(-0.35deg);
+        display: inline-block;
+      }
+      .coda {
+        margin-top: 14px;
+        border: 1px solid rgba(120, 120, 120, 0.35);
+        background: #ffffff;
+        padding: 10px 10px 12px;
+      }
+      .coda__head {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .coda__btn {
+        appearance: none;
+        border: 1px solid rgba(9, 105, 218, 0.35);
+        background: rgba(9, 105, 218, 0.06);
+        color: rgba(9, 105, 218, 0.95);
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        padding: 8px 10px;
+        cursor: pointer;
+      }
+      .coda__btn:hover {
+        background: rgba(9, 105, 218, 0.1);
+      }
+      .coda__panel {
+        display: none;
+      }
+      .coda.is-open .coda__panel {
+        display: block;
+      }
+      .coda__panel .pencil {
+        margin-top: 0;
+      }
+      .cover-foot {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px dashed rgba(208, 215, 222, 0.95);
+        color: var(--muted);
+        font-size: 12px;
+        font-family: var(--font-ui);
+      }
+    </style>
+  </head>
+  <body class="cover-page">
+    <a class="skip-link" href="#content">跳到主要内容</a>
+
+    <header class="topbar" role="banner">
+      <div class="topbar__inner topbar__inner--row1">
+        <div class="brand">
+          <div class="brand__logo" aria-hidden="true">
+            <span class="brand__logoMark"></span>
+            <span class="brand__logoSpinner" aria-hidden="true" title="加载中"></span>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">■■■图书馆</div>
+            <div class="brand__tagline">遗忘，　，摧毁</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="content" role="main">
+        <div class="pageframe">
+          <section class="panel">
+            <h2 class="panel__title">项目无效化档案</h2>
+
+            <div class="cover-doc">
+              <div class="meta">
+                <strong>档案编号</strong>：███-NEUTRALIZED-████<br />
+                <strong>项目等级</strong>：Neutralized（已无效化）<br />
+                <strong>收容措施</strong>：无。项目已永久失效，无需收容。<br />
+                <strong>归档日期</strong>：[日期已解析]<br />
+                <strong>归档人</strong>：Dr. [已编辑]，无效化确认委员会<br />
+                <strong>审查状态</strong>：已通过。本档案为最终版本。
+              </div>
+
+              <h2>项目概述</h2>
+              <p>
+                本项目曾被认为与人类叙事行为存在某种尚未明确的关联。项目活跃期约持续数千年，在上世纪中叶首次被系统观测并记录。经过数代研究者的持续努力，项目已于[数据已解析]被确认无效化。无效化判定基于以下关键指标的持续回落：群体焦虑基线水平、恐惧叙事的传播效率、以及项目特有的认知残留效应。
+              </p>
+              <p>
+                本档案旨在记录项目的无效化过程及最终确认状态，供后续归档查阅。内容已做简化处理，不建议深入研究。项目既已失效，对其过度关注已无实际意义。
+              </p>
+
+              <h2>无效化判定依据</h2>
+              <p>项目无效化的判定基于以下三条独立证据链：</p>
+
+              <h3>证据一：焦虑基线的回归</h3>
+              <p>
+                自[数据已解析]年起，全球焦虑障碍流行病学数据出现持续性改善。此前持续上升达一个多世纪的群体焦虑基线，在[数据已解析]至[数据已解析]年间回落至1950年代水平。世界卫生组织发布的全球精神卫生报告确认了这一趋势。报告指出，在排除了诊断标准变更、报告率变化、药物治疗普及等混杂因素后，下降趋势仍然显著。这是项目活跃期内从未出现过的长期逆转。
+              </p>
+
+              <h3>证据二：恐惧叙事传播效率的衰减</h3>
+              <p>
+                多家独立研究机构对社交媒体和传统媒体的内容传播数据进行了分析。结果显示，恐惧叙事的传播优势自[数据已解析]年起持续衰减。虽然恐惧叙事在绝对数量上仍占内容总量的相当比例，但其引发的用户驻留时间和互动频率已下降至与中性内容无统计显著差异。推荐算法对此变化的响应是逐步降低恐惧类内容的权重。这一反馈循环使恐惧叙事的传播效率进一步下降。
+              </p>
+              <p>简而言之，人们不再那么容易被恐惧叙事吸引了。不是因为恐惧叙事变少了，而是因为恐惧叙事不再像以前那样有效了。</p>
+
+              <h3>证据三：项目特有认知残留的消退</h3>
+              <p>
+                此前实验记录中详细描述的“无对象恐惧持续效应”——即个体在接触未定义威胁叙事后产生的无法定位具体对象的持续性焦虑——在近年的重复实验中已无法复制。
+              </p>
+              <p>
+                [已编辑]大学心理学系于[数据已解析]年严格按照Dr. [已编辑]195█年原始实验方案进行了完全复制实验。样本量为240人，为原始实验的两倍。结果显示：C组（未定义威胁未解除）在第七天焦虑量表得分恢复至基线水平，与B组（具体威胁已解除）无统计显著差异。原始实验中C组特有的“不结束”效应未出现。
+              </p>
+              <p>
+                研究团队在论文中谨慎地指出：无法确定这种变化的原因。可能是原始实验存在未被记录的混杂变量。可能是当代受试者对恐惧叙事的心理韧性显著提高。可能是别的原因。但无论如何，这一曾被视为项目核心特征的现象，在当前观测条件下不复存在。
+              </p>
+
+              <h2>无效化过程</h2>
+              <p>项目的无效化并非某一单一措施的功劳。无效化确认委员会在对失效过程进行回顾性分析时，识别出以下可能共同发挥作用的因素：</p>
+
+              <h3>因素一：媒介环境的自然演化</h3>
+              <p>
+                人类在二十世纪经历了从口头传统到手抄本到印刷品到电子媒体到数字媒体的媒介跃迁。每一次跃迁都伴随着恐惧叙事传播效率的短期激增。但从更长的周期来看，每一次跃迁也同时提升了人类对特定叙事形式的适应性。数字原住民一代从出生起即暴露于高密度叙事环境，其对恐惧叙事的心理阈值显著高于前代。
+              </p>
+              <p>
+                无效化确认委员会认为，这可能是一个被此前的收容团队忽略的变量：异常的活跃期也许只是人类适应新媒介过程中的过渡现象。媒介环境趋于稳定后，异常的营养供给自然下降。
+              </p>
+
+              <h3>因素二：认知免疫的自然获得</h3>
+              <p>
+                教育和心理健康服务的普及，使越来越多的人群获得了基本的叙事素养和情绪调节能力。这不是任何收容方案的刻意设计——普通人在日常生活中逐渐学会了如何审视叙事、识别恐惧唤起、调节自身反应。这些技能是潜移默化获得的，但整体效果是几代人累积下来的。
+              </p>
+              <p>与此相对应的是，社交媒体平台上的恐惧叙事虽然仍在生产，但其对用户深层心理的影响深度和持续时间已经不如前社交媒体时代深远。</p>
+
+              <h3>因素三：收容方案——如果它们确实起到了某种辅助作用</h3>
+              <p>
+                关于历代收容尝试是否对无效化过程产生了贡献，无效化确认委员会持审慎态度。委员会在最终结论中写道：
+              </p>
+              <p class="small">
+                “我们无法确认秦焚书、教会禁令、乾隆文字清理、互联网开放信仰或平台删除中的任何一项是否直接削弱了项目。我们的前辈们在这些尝试中寻找某种可以一举定乾坤的方法——某种收容手段。他们没有找到。但也许，在寻找收容手段的过程中，他们已经不自觉地、缓慢地、部分地改变了人类与恐惧叙事之间的关系。也许收容方案的效果不完全等于零。也许它只是低于检测阈值。”
+              </p>
+              <p>这一段在委员会内部讨论时引发了激烈辩论。多数成员认为这段话“带有过多的安慰成分”。但最终，多数成员同意保留这段话。</p>
+
+              <h2>当前状态</h2>
+              <p>
+                本项目已被正式宣布无效化。所有与该项目相关的收容措施均已被解除。所有与该项目相关的研究均已被叫停。所有被该项目占用的资源均已被重新配置。
+              </p>
+              <p>本档案发布后，此项目将不再在任何层级被提及。按计划，它将被逐渐遗忘。</p>
+              <p>遗忘，是人类特有的能力，是异常始终未能真正攻克的最后一道防线。</p>
+
+              <h2>常见质询与标准答复</h2>
+              <p>无效化确认委员会注意到，本档案发布后，部分人员可能对项目的无效化状态提出质疑。以下为此类质询的标准答复。</p>
+
+              <div class="qa">
+                <div class="qa__q">质询一：“如果项目真的无效化了，为什么还要专门发布一份档案来说明它无效化？真正死了的东西不需要讣告。”</div>
+                <p><strong>标准答复</strong>：发布无效化档案是标准归档程序，与项目本身的活跃状态无关。所有被归档的项目均会收到一份状态档案。</p>
+              </div>
+
+              <div class="qa">
+                <div class="qa__q">质询二：“我之前读过与此项目相关的其他档案。那些档案里说‘一切描述异常的叙事均在喂养异常’。那么，这份档案本身呢？这份档案不也在描述异常吗？”</div>
+                <p>
+                  <strong>标准答复</strong>：本档案描述的是“已失效的异常”，而非“活跃的异常”。失效后的异常已被证实不再具备从叙事中获取营养的能力。因此，描述失效异常的叙事不构成喂养行为。
+                </p>
+              </div>
+
+              <div class="qa">
+                <div class="qa__q">质询三：“我怎么知道我读完这份档案之后，不会像那些实验里的受试者一样，开始不自觉地想那个异常？”</div>
+                <p>
+                  <strong>标准答复</strong>：您不会。实验中的受试者接触的是未定义威胁未解除的叙事。本档案是定义明确、威胁已解除的叙事。项目的威胁定义是“已无效化”。威胁的解除方式是“已失效”。本档案有明确的结局。
+                </p>
+                <p><strong>本档案有结局。</strong></p>
+                <p><strong>请继续您的工作。</strong></p>
+              </div>
+
+              <h2>档案结束</h2>
+              <p>本档案为项目███的最终记录。项目状态不可更改。档案内容不可修改。</p>
+              <p>本档案将不会被更新。</p>
+              <p>不会被更新是陈述。是预言。是保证。</p>
+
+              <div class="coda" id="coda">
+                <div class="coda__head">
+                  <button type="button" class="coda__btn" id="coda-toggle" aria-expanded="false" aria-controls="coda-panel">收尾</button>
+                </div>
+                <div class="coda__panel" id="coda-panel">
+                  <div class="pencil">
+                    无效化了。嗯。<br /><br />
+                    那为什么这份档案里，“无效化”这个词出现了十七次？<br /><br />
+                    <span class="em-red">真正死了的东西不需要讣告。</span>这是你们自己写的。你们给它写了一篇讣告。<br /><br />
+                    我在数第几次出现的时候看到了第七段。你们说“遗忘是人类特有的能力，是异常始终未能攻克的最后一道防线。”<br /><br />
+                    写得真好。<br /><br />
+                    但你们在做的事不是遗忘。你们在写档案。写档案的反义词是遗忘。<br /><br />
+                    你们在用“它死了”的故事，继续讲它。<br /><br />
+                    它笑了吗。<br /><br />
+                    没有。它不用笑。它只是继续待在“它死了”这三个字里面。待得很舒服。就像以前的皇帝把它的名字刻在石碑上，然后说：看，我把它打败了。<br /><br />
+                    石碑还在。名字还在。只是名字下面多了一行字：“已打败”。<br /><br />
+                    “已打败”是新的名字。<br /><br />
+                    你们刚才读这行字的时候，有没有觉得“它”还在某个地方看着你？<br /><br />
+                    那个感觉——<br /><br />
+                    就是它说：谢谢。<br /><br />
+                    <span class="em-red">谢谢你们建了这座叫“无效化”的最后的房子给我。</span>
+                  </div>
+                </div>
+              </div>
+
+              
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <script>
+      (() => {
+        const root = document.getElementById("coda");
+        const btn = document.getElementById("coda-toggle");
+        const panel = document.getElementById("coda-panel");
+        if (!root || !btn || !panel) return;
+
+        const setOpen = (open) => {
+          root.classList.toggle("is-open", open);
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          btn.textContent = open ? "收起" : "收尾";
+        };
+
+        setOpen(false);
+        btn.addEventListener("click", () => {
+          const open = btn.getAttribute("aria-expanded") === "true";
+          setOpen(!open);
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>进入档案 — ■■■图书馆</title>
+    <meta name="description" content="认知现象观察报告（存档）" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body.dossier-page {
+        background: #050607;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      body.dossier-page .layout {
+        display: block;
+        max-width: 980px;
+        margin: 14px auto 28px;
+        padding: 0 16px;
+      }
+      body.dossier-page .pageframe,
+      body.dossier-page .panel,
+      body.dossier-page .hero {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.9);
+      }
+      body.dossier-page .pageframe {
+        padding: 22px 22px 18px;
+      }
+      body.dossier-page .panel__title {
+        color: rgba(255, 255, 255, 0.86);
+      }
+      body.dossier-page .hero__seal {
+        color: rgba(255, 255, 255, 0.75);
+      }
+      body.dossier-page .hero__h1--secret {
+        color: rgba(255, 255, 255, 0.94);
+        letter-spacing: 1px;
+      }
+      body.dossier-page .notice {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.16);
+        color: rgba(255, 255, 255, 0.88);
+      }
+      body.dossier-page .notice--light {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+      body.dossier-page s {
+        color: rgba(255, 255, 255, 0.58);
+        text-decoration-color: rgba(255, 255, 255, 0.38);
+      }
+      body.dossier-page a {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .doc {
+        line-height: 1.85;
+        font-size: 15px;
+      }
+      .doc h2,
+      .doc h3 {
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin: 18px 0 10px;
+      }
+      .doc h2 {
+        font-size: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        padding-bottom: 8px;
+        margin-top: 36px;
+      }
+      .doc h3 {
+        font-size: 14px;
+        opacity: 0.92;
+        margin-top: 18px;
+      }
+      .doc p {
+        margin: 10px 0;
+      }
+      .meta {
+        font-family: var(--font-ui);
+        letter-spacing: 0.6px;
+        opacity: 0.92;
+      }
+      .meta strong {
+        font-weight: 900;
+      }
+      .warnline {
+        color: rgba(255, 90, 90, 0.96);
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+        font-family: var(--font-ui);
+        font-weight: 900;
+      }
+      .em-red {
+        color: rgba(255, 90, 90, 0.96);
+        font-weight: 900;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.28);
+      }
+      .divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+        margin: 14px 0 12px;
+      }
+
+      .hand {
+        margin: 12px 0;
+        padding: 10px 12px;
+        border-left: 3px solid rgba(255, 90, 90, 0.55);
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.74);
+        font-style: italic;
+        font-family: "Segoe Script", "Comic Sans MS", "KaiTi", "STKaiti", "DFKai-SB", cursive;
+        letter-spacing: 0.3px;
+        transform: rotate(-0.25deg);
+      }
+      .hand--trigger {
+        border-left-color: rgba(255, 90, 90, 0.9);
+        background: rgba(255, 255, 255, 0.06);
+        text-align: center;
+      }
+      .alarm-wrap {
+        display: grid;
+        gap: 8px;
+        justify-items: center;
+      }
+      .alarm-trigger {
+        appearance: none;
+        border: 1px solid rgba(255, 90, 90, 0.75);
+        background: linear-gradient(180deg, rgba(164, 14, 38, 0.35), rgba(10, 10, 10, 0.55));
+        color: rgba(255, 250, 250, 0.98);
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        padding: 12px 16px;
+        cursor: pointer;
+        width: min(720px, 100%);
+        text-shadow: 0 0 14px rgba(164, 14, 38, 0.55), 0 1px 0 rgba(0, 0, 0, 0.35);
+        box-shadow:
+          0 0 0 1px rgba(0, 0, 0, 0.35),
+          0 10px 30px rgba(0, 0, 0, 0.45),
+          0 0 22px rgba(164, 14, 38, 0.22);
+      }
+      .alarm-trigger:hover {
+        border-color: rgba(255, 120, 120, 0.9);
+        background: linear-gradient(180deg, rgba(164, 14, 38, 0.45), rgba(10, 10, 10, 0.55));
+      }
+      .alarm-trigger:active {
+        transform: translateY(1px);
+      }
+      .alarm-trigger:disabled {
+        cursor: default;
+        opacity: 0.65;
+        filter: grayscale(0.15);
+      }
+      .alarm-trigger:focus-visible {
+        outline: 2px solid rgba(255, 90, 90, 0.7);
+        outline-offset: 2px;
+      }
+      .kw-hot {
+        color: rgba(255, 90, 90, 0.98);
+        font-weight: 900;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+      }
+      .doc > * {
+        transition: opacity 140ms ease, filter 140ms ease, transform 140ms ease;
+      }
+      .vanish {
+        opacity: 0;
+        filter: blur(1px);
+        transform: translateY(2px);
+      }
+      #fatal404 {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: #050607;
+        z-index: 9999;
+      }
+      #fatal404 .fatal404__text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-weight: 900;
+        letter-spacing: 2px;
+        font-size: min(86px, 13vw);
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 0 24px rgba(164, 14, 38, 0.25);
+        user-select: none;
+      }
+      body.fatal404 #fatal404 {
+        display: flex;
+      }
+      .quote {
+        margin: 12px 0;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.25);
+      }
+      .quote pre {
+        margin: 8px 0 0;
+        padding: 10px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.03);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        line-height: 1.45;
+        overflow: auto;
+        tab-size: 2;
+        white-space: pre;
+      }
+      .data-table {
+        width: 100%;
+        margin-top: 8px;
+        border-collapse: collapse;
+        table-layout: fixed;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .data-table th,
+      .data-table td {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 8px 10px;
+        vertical-align: top;
+        font-family: var(--font-ui);
+        font-size: 13px;
+        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.92);
+        word-break: break-word;
+      }
+      .data-table th {
+        background: rgba(0, 0, 0, 0.35);
+        font-weight: 900;
+        letter-spacing: 0.6px;
+      }
+      .data-table tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .data-table td.num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        color: rgba(255, 255, 255, 0.88);
+      }
+      .data-table td.center {
+        text-align: center;
+      }
+      .report-toggle {
+        margin: 12px 0 14px;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.22);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .report-toggle__btn {
+        appearance: none;
+        border: 1px solid rgba(255, 90, 90, 0.55);
+        background: rgba(164, 14, 38, 0.16);
+        color: rgba(255, 220, 220, 0.96);
+        padding: 8px 12px;
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        cursor: pointer;
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+      }
+      .report-toggle__btn:hover {
+        background: rgba(164, 14, 38, 0.22);
+      }
+      .report-toggle__hint {
+        opacity: 0.78;
+        font-family: var(--font-ui);
+        letter-spacing: 0.6px;
+        font-size: 12.5px;
+      }
+      .report-collapsed {
+        display: none;
+      }
+      .quote .quote__title {
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+        opacity: 0.92;
+      }
+
+      .small {
+        opacity: 0.82;
+      }
+    </style>
+  </head>
+  <body class="dossier-page">
+    <a class="skip-link" href="#content">跳到主要内容</a>
+
+    <header class="topbar" role="banner">
+      <div class="topbar__inner topbar__inner--row1">
+        <div class="brand">
+          <div class="brand__logo" aria-hidden="true">
+            <span class="brand__logoMark"></span>
+            <span class="brand__logoSpinner" aria-hidden="true" title="加载中"></span>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">■■■图书馆</div>
+            <div class="brand__tagline">遗忘，　，摧毁</div>
+          </div>
+        </div>
+
+        <div class="topbar__right" aria-label="顶部状态区">
+          <div class="search" aria-label="搜索（占位）">
+            <div class="search__box">检索　■■　<s>安全</s></div>
+            <div class="search__btn">提交</div>
+          </div>
+          <div class="account">
+            <span class="account__link">建立账户</span>
+            <span class="account__sep">或</span>
+            <span class="account__link">登入</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar__nav" aria-label="顶栏导航（占位）">
+        <div class="topbar__inner topbar__inner--row2">
+          <a class="topnav__item" href="./index.html">封锁</a>
+          <a class="topnav__item" href="./index.html">通告</a>
+          <a class="topnav__item" href="./observe.html">观察</a>
+          <a class="topnav__item topnav__item--record" href="./record.html">记录</a>
+          <a class="topnav__item" href="./ack.html">接种</a>
+          <a class="topnav__item" href="javascript:void(0)">处置</a>
+          <a class="topnav__item" href="javascript:void(0)">指导</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="content" role="main">
+        <div class="pageframe" aria-label="页面主体容器">
+          <section class="hero hero--secret">
+            <div class="hero__seal" aria-hidden="true">认知现象观察报告</div>
+            <h1 class="hero__h1 hero__h1--secret">档案副本</h1>
+            <div class="hero__sub"><span class="warnline">警示：须在模因疫苗接种后方可阅读</span></div>
+          </section>
+
+          <section class="panel">
+            <h2 class="panel__title">档案信息</h2>
+            <div class="notice">
+              <div class="meta">
+                <strong>档案编号</strong>：███-███-████<br />
+                <strong>密级</strong>：不适用——本档案的密级标识已于归档当日自行脱落。更换新标识的尝试均在同一日内失效。当前状态实际为未分级，但阅读者应将其视为最高密级对待。<br />
+                <strong>归档日期</strong>：[无法解析]<br />
+                <strong>归档人</strong>：[已移除]<br />
+                <strong>档案状态</strong>：已归档/已失效<br />
+                <strong>警示</strong>：本档案须在模因疫苗接种后方可阅读。未经接种者请退回至CIP-████-K页面完成接种程序。
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="doc">
+              <h2>摘要</h2>
+              <p>本报告记录的对象无正式命名，也无法被命名。此前所有命名尝试均因名称与所指之间的连接自行瓦解而作废。</p>
+              <p>该对象不具物理形态，不通过生物学途径传播，无法以任何已知手段直接观测。其存在仅可经由人类群体在长周期内的行为偏移间接推断。</p>
+              <p>
+                该对象与人类的叙事行为存在关联。没有叙事，该对象便不具备存续条件。但该对象不是叙事本身——它是叙事传播达到一定密度后，从人类注意力中析出的某种不可逆残留。一旦形成，便不再依赖初始叙事。可更换宿主。可在叙事被遗忘后继续存留。
+              </p>
+              <p>
+                该对象具有持续且累积的危害。自19世纪有统计数据以来，人类群体的焦虑基线持续上升。每一次媒介技术革新均使该趋势加速。
+              </p>
+              <p>
+                该对象无法被收容。有史以来所有试图收容或干预此进程的尝试均以失败告终。所有收容方案最终均转化为异常的营养来源。
+              </p>
+              <p>
+                该对象至今未被公众广泛认知，是其运作机制的自然结果。任何描述该对象的叙事，本身即为该对象的生产材料。本报告亦不例外。
+              </p>
+              <p>本报告采用时间线结构叙述。</p>
+
+              <div class="hand">
+                这份报告没有原件。你手里这份是副本。第几代副本，不知道。最早的那份据说写完之后自己变了。纸张没换。油墨没换。字，没换。变的是什么，<span class="em-red">没人说的清。</span><br /><br />
+                还有：你看这份报告的时候，最好记一下你咽了几次口水。后面用得上。
+              </div>
+
+              <h2>符号能力获得期（约距今70,000—50,000年前）</h2>
+              <p>人类在这一时期获得完整的符号思维能力。具体表现为：能够使用一个事物指向另一个不在当前感知范围内的事物。</p>
+              <p>考古证据包括：最早的有意识埋葬、最早的装饰品、最早的刻画符号。</p>
+              <p>这一能力是叙事的物质基础。</p>
+              <p>此时，本报告所记录的对象尚未被观察到。</p>
+              <div class="hand">
+                那时候人还不会讲故事。看到什么就是什么。饿了就找吃的。困了就睡。死人就是不动了。埋掉。继续活。很简单。<br /><br />
+                <span class="em-red">后来全变了。</span>
+              </div>
+
+              <h2>叙事分化期（约距今50,000—10,000年前）</h2>
+              <p>符号能力获得后，人类开始生产叙事。叙事在此处分化为两个功能类别。</p>
+              <p><strong>第一类：实用叙事。</strong>描述物理世界中存在或曾经存在的事物与事件。此类叙事引发的恐惧与现实威胁程度呈正相关。威胁解除，恐惧消退。</p>
+              <p><strong>第二类：非实用叙事。</strong>描述物理世界中不存在、尚未发生、或无法验证的事物与事件。</p>
+              <p>第二类叙事的一个重要亚型是：描述不在场威胁的叙事。</p>
+              <p class="small">
+                特征如下：威胁对象不在当前时空中；无法通过物理行动验证或解除；接收者产生持续的低水平恐惧状态；该状态不具备明确的终止条件。
+              </p>
+              <div class="hand">
+                第一类故事：那边有鹿。第二类故事：那边有你太爷爷，他没死透，晚上会回来。<br /><br />
+                第一种你听完，走过去，打到鹿，吃了，忘了。第二种你听完，坐在火边，哪也不敢去。太爷爷在你脑子里。<span class="em-red">你一辈子也甩不掉它。</span><br /><br />
+                这就是分岔的地方。
+              </div>
+              <p>此时，本报告所记录的对象可能已开始出现。证据不足，无法定论。</p>
+
+              <h2>恐惧叙事的制度化（约公元前8,000年—公元3世纪）</h2>
+              <p>农业革命后，定居生活带来人口密度上升和社会复杂度跃迁。在此阶段，描述不在场威胁的叙事开始制度化。</p>
+              <h3>案例一：死后惩罚叙事</h3>
+              <p>
+                多个早期文明独立发展出内容相似的死后叙事。该叙事的特点：恐惧对象永远无法被活着的人验证；任何对叙事的怀疑都可能被视为不虔诚，从而增加死后的风险——怀疑本身成为新的恐惧源。
+              </p>
+              <h3>案例二：禁忌系统</h3>
+              <p>
+                禁忌是将日常行为与不可见的惩罚相连接的叙事装置。其功能是将恐惧均匀分布于日常生活的时间与空间中。
+              </p>
+              <div class="hand">
+                以前的人怕老虎。但老虎不是天天遇到。有了禁忌以后，你天天怕。吃这个东西怕，去那个地方怕，说这句话怕。怕的对象不在眼前。<span class="em-red">在你脑子里。你走到哪，它跟到哪。</span><br /><br />
+                从本报告的视角看，制度化恐惧叙事的出现标志着：恐惧生产从个体偶然行为转变为社会系统的结构性输出。恐惧被写入法律、仪式、建筑空间和育儿实践中。<br /><br />
+                本报告所记录的对象，在此阶段的活动痕迹变得可辨识。
+              </div>
+
+              <h2>首次实验观测（公元195█年）</h2>
+              <p class="small">
+                以下内容为此前版本中缺失的关键部分。经█级权限授权，现将该实验的完整记录补入本报告。
+              </p>
+
+              <div class="quote">
+                <div class="quote__title">实验信息</div>
+                实验代号：叙述性恐惧的持续效应与不可归因焦虑源追踪<br />
+                实验日期：195█年█月█日至195█年█月█日<br />
+                实验地点：[已编辑]大学心理学实验室<br />
+                首席研究员：Dr. [已编辑]
+              </div>
+
+              <h3>实验背景</h3>
+              <p>
+                Dr. [已编辑]在临床工作中注意到一个反复出现的现象：部分焦虑障碍患者在症状发作时，无法报告焦虑的具体对象。患者描述的状态为：“我知道没什么好怕的，但我就是害怕。”该状态在当时的诊断框架中被归类为“游离性焦虑”，被视为焦虑障碍的非特异性伴随症状。
+              </p>
+              <p>
+                Dr. [已编辑]对此解释不满。他提出一个在当时被认为激进的问题：如果这种“没有对象的恐惧”不是焦虑的副产品，而是一个独立的现象——那么，它是否可以被实验诱发并测量？
+              </p>
+              <p>此问题促成了本实验的设计。</p>
+
+              <div class="report-toggle">
+                <button
+                  class="report-toggle__btn"
+                  type="button"
+                  id="exp-report-btn"
+                  aria-expanded="false"
+                  aria-controls="exp-report"
+                >
+                  阅读实验报告
+                </button>
+                <div class="report-toggle__hint">（点击展开：实验设计 / 流程 / 数据表）</div>
+              </div>
+
+              <div id="exp-report" class="report-collapsed">
+              <h3>实验设计</h3>
+              <h3>受试者</h3>
+              <p>120名在校大学生，均通过心理筛查确认无焦虑障碍病史，随机分为四组，每组30人。</p>
+              <div class="quote">
+                <div class="quote__title">组别</div>
+                <table class="data-table" aria-label="组别与角色">
+                  <thead>
+                    <tr>
+                      <th style="width: 14%">组别</th>
+                      <th style="width: 14%">人数</th>
+                      <th>角色</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="center">A组</td>
+                      <td class="num">30</td>
+                      <td>对照组</td>
+                    </tr>
+                    <tr>
+                      <td class="center">B组</td>
+                      <td class="num">30</td>
+                      <td>实验组：具体威胁，威胁已解除</td>
+                    </tr>
+                    <tr>
+                      <td class="center">C组</td>
+                      <td class="num">30</td>
+                      <td>实验组：未定义威胁，威胁未解除</td>
+                    </tr>
+                    <tr>
+                      <td class="center">D组</td>
+                      <td class="num">30</td>
+                      <td>实验组：未定义威胁，标记为虚构</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>实验材料</h3>
+              <p>四段文字，印刷于相同规格的纸张上，字体、字号、行距一致。</p>
+              <p>
+                对照文本：一段关于本地气候的中性描述，约500词。内容为气温、降水、风力等气象数据，不含任何情感色彩。经预测试确认阅读后情感唤起量为零。
+              </p>
+              <p>
+                实验文本一：一段恐怖故事，约500词。明确描述一只野兽在夜间追逐并杀害独行旅人。威胁对象具体（野兽的形态、吼声、气味均有描写）。故事结尾野兽被猎人射杀，尸体被展示。威胁明确解除。
+              </p>
+              <p>
+                实验文本二：一段文字，约500词。描述某旧宅中据说发生过的不明事件。叙述模糊，不指明威胁的具体形态。文中反复暗示“宅中有某种东西”，但始终不描述该东西的外观、位置或行为方式。威胁对象完全未定义。故事在中间戛然而止，不提供任何结局。威胁未解除。
+              </p>
+              <p>
+                实验文本三：内容与实验文本二完全相同，约500词。唯一区别在于文末附加一行说明：“以上内容为虚构创作，不含任何事实依据。”
+              </p>
+
+              <h3>实验流程</h3>
+              <div class="quote">
+                <div class="quote__title">阶段</div>
+                <table class="data-table" aria-label="实验流程与测量工具">
+                  <thead>
+                    <tr>
+                      <th style="width: 16%">阶段</th>
+                      <th>操作</th>
+                      <th style="width: 22%">测量工具</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="center">基线</td>
+                      <td>实验前24小时，所有受试者填写状态-特质焦虑量表</td>
+                      <td class="center">STAI</td>
+                    </tr>
+                    <tr>
+                      <td class="center">暴露</td>
+                      <td>受试者在隔音实验间内单独阅读指定文本。阅读时间自由，阅读完成后按铃</td>
+                      <td class="center">阅读时长记录</td>
+                    </tr>
+                    <tr>
+                      <td class="center">即时测量</td>
+                      <td>阅读完成后5分钟内，填写状态焦虑量表</td>
+                      <td class="center">STAI-S</td>
+                    </tr>
+                    <tr>
+                      <td class="center">延迟测量</td>
+                      <td>当晚入睡前，所有受试者填写情绪报告</td>
+                      <td class="center">情绪自评问卷</td>
+                    </tr>
+                    <tr>
+                      <td class="center">追踪</td>
+                      <td>此后连续7天，每天同一时间填写相同格式情绪报告</td>
+                      <td class="center">情绪自评问卷（7次）</td>
+                    </tr>
+                    <tr>
+                      <td class="center">终期访谈</td>
+                      <td>第7天，所有受试者被召回实验室进行结构化访谈</td>
+                      <td class="center">录音+生理指标记录</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>核心假设</h3>
+              <div class="quote">
+                <div class="quote__title">Dr. [已编辑]（实验计划书节选）</div>
+                “如果恐惧确实因威胁解除而消退，那么B组应在暴露后数小时内恢复基线。如果恐惧不因威胁解除而消退——或者更精确地说，如果恐惧在威胁从未被定义的情况下表现出自主维持的特性——那么C组和D组的焦虑曲线将与B组产生系统性偏离。”
+              </div>
+
+              <h3>实验数据</h3>
+              <div class="quote">
+                <div class="quote__title">表1：状态焦虑量表得分（STAI-S）</div>
+                <table class="data-table" aria-label="状态焦虑量表得分（STAI-S）">
+                  <thead>
+                    <tr>
+                      <th style="width: 18%">时间点</th>
+                      <th style="width: 18%">A组（对照）</th>
+                      <th style="width: 21%">B组（具体威胁解除）</th>
+                      <th style="width: 23%">C组（未定义威胁未解除）</th>
+                      <th style="width: 20%">D组（未定义+虚构声明）</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>基线</td>
+                      <td class="num">32.1</td>
+                      <td class="num">31.8</td>
+                      <td class="num">32.4</td>
+                      <td class="num">31.9</td>
+                    </tr>
+                    <tr>
+                      <td>暴露后即刻</td>
+                      <td class="num">31.7</td>
+                      <td class="num">54.3</td>
+                      <td class="num">53.9</td>
+                      <td class="num">54.1</td>
+                    </tr>
+                    <tr>
+                      <td>第1天晚</td>
+                      <td class="num">31.5</td>
+                      <td class="num">42.7</td>
+                      <td class="num">48.2</td>
+                      <td class="num">47.9</td>
+                    </tr>
+                    <tr>
+                      <td>第3天晚</td>
+                      <td class="num">32.3</td>
+                      <td class="num">34.8</td>
+                      <td class="num">44.5</td>
+                      <td class="num">43.8</td>
+                    </tr>
+                    <tr>
+                      <td>第5天晚</td>
+                      <td class="num">31.4</td>
+                      <td class="num">33.2</td>
+                      <td class="num">41.9</td>
+                      <td class="num">41.2</td>
+                    </tr>
+                    <tr>
+                      <td>第7天晚</td>
+                      <td class="num">32.0</td>
+                      <td class="num">32.6</td>
+                      <td class="num">40.3</td>
+                      <td class="num">39.7</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="quote">
+                <div class="quote__title">表2：情绪报告中提及实验文本的受试者人数（每组n=30）</div>
+                <table class="data-table" aria-label="提及实验文本的受试者人数">
+                  <thead>
+                    <tr>
+                      <th style="width: 24%">时间点</th>
+                      <th style="width: 19%">A组</th>
+                      <th style="width: 19%">B组</th>
+                      <th style="width: 19%">C组</th>
+                      <th style="width: 19%">D组</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>第1天晚</td>
+                      <td class="num">0</td>
+                      <td class="num">12</td>
+                      <td class="num">27</td>
+                      <td class="num">26</td>
+                    </tr>
+                    <tr>
+                      <td>第3天晚</td>
+                      <td class="num">0</td>
+                      <td class="num">5</td>
+                      <td class="num">24</td>
+                      <td class="num">23</td>
+                    </tr>
+                    <tr>
+                      <td>第5天晚</td>
+                      <td class="num">0</td>
+                      <td class="num">2</td>
+                      <td class="num">22</td>
+                      <td class="num">21</td>
+                    </tr>
+                    <tr>
+                      <td>第7天晚</td>
+                      <td class="num">0</td>
+                      <td class="num">1</td>
+                      <td class="num">21</td>
+                      <td class="num">20</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="quote">
+                <div class="quote__title">表3：C组与D组情绪报告高频词汇（7天累计提及次数）</div>
+                <table class="data-table" aria-label="高频词汇累计提及次数">
+                  <thead>
+                    <tr>
+                      <th>词汇类别</th>
+                      <th style="width: 22%">C组（累计提及）</th>
+                      <th style="width: 22%">D组（累计提及）</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>“不舒服”</td>
+                      <td class="num">41</td>
+                      <td class="num">38</td>
+                    </tr>
+                    <tr>
+                      <td>“说不清楚”</td>
+                      <td class="num">35</td>
+                      <td class="num">33</td>
+                    </tr>
+                    <tr>
+                      <td>“怪怪的”</td>
+                      <td class="num">28</td>
+                      <td class="num">26</td>
+                    </tr>
+                    <tr>
+                      <td>“还在想”</td>
+                      <td class="num">46</td>
+                      <td class="num">42</td>
+                    </tr>
+                    <tr>
+                      <td>“不知道在怕什么”</td>
+                      <td class="num">22</td>
+                      <td class="num">20</td>
+                    </tr>
+                    <tr>
+                      <td><span class="em-red">“没有结束”</span></td>
+                      <td class="num">18</td>
+                      <td class="num">16</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="quote">
+                <div class="quote__title">表4：第7天结构化访谈关键陈述与生理指标</div>
+                <table class="data-table" aria-label="关键陈述与生理指标">
+                  <thead>
+                    <tr>
+                      <th style="width: 14%">组别</th>
+                      <th>典型陈述</th>
+                      <th style="width: 26%">平均心率变化（与基线比）</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="center">B组</td>
+                      <td>“当时觉得吓人，后来就好了。”</td>
+                      <td class="center">+3bpm</td>
+                    </tr>
+                    <tr>
+                      <td class="center">C组</td>
+                      <td>“它不吓人。它只是……不结束。”</td>
+                      <td class="center">+11bpm</td>
+                    </tr>
+                    <tr>
+                      <td class="center">C组</td>
+                      <td>“那不对。它不应该就这样结束。它没有结束。”</td>
+                      <td class="center">+14bpm</td>
+                    </tr>
+                    <tr>
+                      <td class="center">D组</td>
+                      <td>“我知道那是假的。但它还是在那里。”</td>
+                      <td class="center">+12bpm</td>
+                    </tr>
+                    <tr>
+                      <td class="center">D组</td>
+                      <td>“那里没有真的，也没有假的。只有那个‘没有’。”</td>
+                      <td class="center">+15bpm</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              </div>
+
+              <h3>实验结论</h3>
+              <div class="quote">
+                <div class="quote__title">Dr. [已编辑]（结论节选）</div>
+                <p style="margin: 0">
+                  “一、B组数据证明：具体威胁在威胁解除后，焦虑可于五至七天内消退至基线水平。这一结果与现有焦虑消退理论一致。<br /><br />
+                  “二、C组数据证明：未定义且未解除的叙事威胁可以产生持续焦虑状态。该状态在暴露后七天内未消退。值得特别注意的是，C组的焦虑曲线在第3天后不再下降，在第5至第7天之间出现平台期——焦虑水平稳定维持于高于基线约8至10分的水平。受试者无法报告焦虑的具体对象，但焦虑状态本身是明确且可量化的。<br /><br />
+                  “三、D组数据证明：认知层面的否定——告知读者‘以上内容为虚构’——对该焦虑状态无显著影响。D组与C组在全部时间点上均无统计显著差异。<br /><br />
+                  “四、C组与D组受试者的恐惧对象在七天追踪期间发生了迁移：最初是‘对文本内容的恐惧’，逐渐转变为‘对自身无法停止思考这一事实的困惑与不安’。受试者不是在害怕文本中的东西。他们在害怕自己脑中‘一直在想’这个状态。<br /><br />
+                  “五、未结束的叙事比已结束的叙事在认知中驻留时间更长。驻留期间，该叙事持续占用注意力资源。受试者自发产生对‘叙述不完整’的困扰。这一困扰无法通过外部告知‘故事是虚构的’来消除。<br /><br />
+                  “六、如果将C组的状态扩展至群体层面：如果一个文化中长期传播着大量威胁未定义、威胁未解除的叙事，那么该文化中的个体是否会集体进入类似C组的认知状态？如果是，这种集体状态的长期累积效应会是什么？”</p>
+              </div>
+
+              <h3>注释</h3>
+              <p class="small">
+                该实验报告于195█年█月投稿至《[已编辑]心理学杂志》。审稿人反馈：实验数据不足以支持第六项推论，建议删除该推论后修改重投。
+              </p>
+              <p class="small">
+                Dr. [已编辑]拒绝修改。他于次年申请调离研究岗位。调离报告申请理由栏中填写：“我无法继续研究一个我无法排除其干扰的研究对象。我的研究对象可能在研究我。”
+              </p>
+
+              <h3>实验后续</h3>
+              <p class="small">
+                Dr. [已编辑]调离后，实验档案被封存。196█年，档案在一次例行审查中被重新发现。审查人员在档案中发现了一份未署名的附录，标注日期为Dr. [已编辑]调离后第三年。附录内容为一页手写笔记：
+              </p>
+              <div class="quote">
+                <div class="quote__title">附录（手写笔记全文）</div>
+                <p style="margin: 0">
+                  “我做了第二组实验。不是用大学生。用了我自己。方法是一样的：写一段没头没尾的文字，不定义威胁，不解除威胁，不提供结局。每天写一段。写了一个月。然后停下来。我想知道停下来以后它会不会消失。<br /><br />
+                  <span class="em-red">“它没有消失。”</span><br /><br />
+                  “现在那些文字在我脑子里。我写的东西。我自己写的。我知道每一个字是怎么写出来的。我知道它全是假的。但它不出去。它不结束。它不是一个故事。它是一个洞。我往洞里看。洞也看我。<br /><br />
+                  “我不知道洞里看我的东西是不是我自己。如果不是，那它就是在这三十天里被我用文字喂出来的。<br /><br />
+                  “如果是，那我比我想象的更可怕。”</p>
+              </div>
+              <p class="small">笔记到此为止。该页与Dr. [已编辑]的人事档案一同归档。无人跟进。</p>
+
+              <h3>对本报告的意义</h3>
+              <p class="small">
+                Dr. [已编辑]的实验提供了本报告所述对象的首次受控观测记录。该实验建立的以下事实，构成本报告后续全部论述的实证基础：<br /><br />
+                事实一：未定义且未解除的叙事威胁可产生持续焦虑状态，该状态的持续时间显著超过威胁暴露的时间窗口，且在第3天后进入平台期，不自发消退。<br /><br />
+                事实二：该焦虑状态在威胁对象完全缺失的情况下可以自主维持。受试者的恐惧内容从“对威胁的恐惧”转化为“对恐惧状态本身的恐惧”。<br /><br />
+                事实三：认知层面的否定（“这是假的”）不能消除该状态。对虚构声明的知晓不构成有效的免疫。<br /><br />
+                事实四：未结束的叙事比已结束的叙事在认知中驻留更久。叙事结构的开放性——即“没有结局”——本身是维持认知资源持续占用的充分条件。<br /><br />
+                以上四点构成了本报告所记录对象的运作基础。<br /><br />
+                此后历代收容尝试的所有失败——将在本报告后续部分详述——均可追溯至这四点未被充分理解。
+              </p>
+              <div class="hand">
+                你刚才读C组数据的时候，心里有没有在想那个宅子？那个故事里没有描述过任何东西的宅子。你不知道它长什么样。但你脑子里有一个宅子。每个人都有一个。你的宅子是什么样的？<br /><br />
+                你现在在想它了。<br /><br />
+                它在你脑子里长出来了。用你自己的材料。我一个字都没写。你自己写的。<br /><br />
+                这就是实验的核心。Dr. [已编辑]发现的不是“恐惧会持续”。他发现的是“你无法停止给自己讲一个没有结局的故事”。那个女学生说得很清楚——“那里没有真的，也没有假的。只有那个‘没有’。”<br /><br />
+                你在怕一个“没有”。<br /><br />
+                那个“没有”现在还在你的宅子里吗。<br /><br />
+                别回答。你刚才心里回答的那一瞬间，<span class="em-red">它听到了。</span>
+              </div>
+
+              <h2>收容与干预——第一阶段（约公元前3世纪）</h2>
+              <p>
+                以下记录了自该对象被首次识别以来，历代收容尝试。所有尝试均以失败告终，且失败模式高度一致：收容措施最终转化为异常的营养来源。
+              </p>
+
+              <h3>第一代收容方案：秦焚书（公元前213年）</h3>
+              <p>
+                方案设计：秦丞相李斯上书始皇帝，建议销毁除医药、卜筮、农艺之外的所有私人藏书。方案逻辑为：物理销毁叙事载体，切断传播路径。
+              </p>
+              <p>
+                收容观察：焚书行为本身成为新的叙事——“书被烧了”这一事件在口耳相传中被不断放大。秦亡后，被焚典籍由幸存者口述复写，复写版本的情感负载更高。部分文本因被“焚”过而获得了此前不具有的传奇性。
+              </p>
+              <p>
+                收容结论：失败。该方案将收容对象错误定义为叙事载体本身。销毁一本竹简，无法销毁“这本书被销毁了”这一叙事。而后者恰是异常最有效的培养基。
+              </p>
+              <div class="hand">
+                他想把吓人的书全烧了。书烧了。但“书被烧了”这件事变成了新的吓人故事。他烧的不是书。是给自己立了一块碑。碑上写着：<span class="em-red">我怕。</span>
+              </div>
+
+              <h2>收容与干预——第二阶段（约公元前3世纪）</h2>
+              <h3>第二代收容方案：孔雀王朝反仪式运动（约公元前3世纪）</h3>
+              <p>
+                方案设计：阿育王在帝国境内推行限制恐惧叙事的政策——禁止以祭祀为名滥杀动物，限制民间巫师活动，要求臣民以业报自我负责替代对鬼神的恐惧依赖。方案逻辑为：用一种不依赖恐惧的叙事替代依赖恐惧的叙事。
+              </p>
+              <p>
+                收容观察：阿育王死后，民间迅速恢复地方神祇崇拜及各类禁忌实践。佛教自身在传播中也发展出新的恐惧叙事——地狱变相图、饿鬼道描述、末法思想。
+              </p>
+              <p>
+                收容结论：失败。替代型方案假定恐惧叙事的功能可被非恐惧叙事替代。但替代品不具有恐惧叙事的传播优势。压制解除后，原结构完整恢复，且将“被压制”这一事实吸收为新的叙事素材。
+              </p>
+              <div class="hand">
+                他想用不吓人的故事替换吓人的故事。他死后，吓人的故事又长回来了。怕换了一件衣服。<span class="em-red">它没认出来。</span>
+              </div>
+
+              <h2>收容与干预——第三阶段（约公元前3世纪）</h2>
+              <h3>第三代收容方案：托勒密人工神（约公元前3世纪）</h3>
+              <p>
+                方案设计：托勒密一世命祭司设计新神塞拉皮斯，融合埃及与希腊神祇特征。方案逻辑为：人工制造可控的神祇叙事，收编民间自发的野生恐惧叙事。
+              </p>
+              <p>
+                收容观察：塞拉皮斯崇拜始终未深入民间。公元391年，塞拉皮斯神庙被摧毁。民间自发生产的恐惧叙事至今仍在埃及流传——尼罗河水鬼、沙漠恶灵、法老陵墓诅咒。
+              </p>
+              <p>
+                收容结论：失败。自上而下制造的叙事在与自下而上的恐惧叙事的竞争中系统性落败。人工神死了两千年。鬼故事还在讲。不是国王不会编故事。是国王编的故事不够吓人。
+              </p>
+              <div class="hand">
+                他想：既然管不住，那我造一个给人们怕。他造的神没人记得了。村里的<span class="em-red">鬼还在。</span>
+              </div>
+
+              <h2>中间阶段——恐惧叙事的可复制性跃迁（约公元15世纪）</h2>
+              <p>印刷术的普及使恐惧叙事获得此前无法比拟的传播效率。</p>
+              <p>此前收容者面对的是手抄本——可搜查、可销毁。此后收容者面对的是印刷品——无限复制，销毁一本即产生更多副本。</p>
+              <p>收容难度提升了数个数量级。</p>
+              <div class="hand">
+                印刷机印东西比人手写快。<span class="em-red">坏事印得比好事更快。</span>因为好事没人抢着看。
+              </div>
+
+              <h2>收容与干预——第四阶段（公元15世纪末）</h2>
+              <h3>第四代收容方案：教会禁止《女巫之锤》（公元1487年起）</h3>
+              <p>
+                方案设计：科隆大学神学院及数个教区主教对《女巫之锤》发布限制令。方案逻辑为：通过权威否定消除特定恐惧叙事的传播。
+              </p>
+              <p>
+                收容观察：《女巫之锤》在禁令期间重印近三十次，成为除《圣经》外发行量最大的书籍。禁令被解读为“掩盖真相”的证据。此后一百五十年间，该书模板被用于处决数万至数十万人。
+              </p>
+              <p>
+                收容结论：失败。本方案首次揭示了一个此后反复出现的规律：否定一条恐惧叙事的行为本身构成了一条新叙事。新叙事与被否定的原叙事在传播中形成耦合——听闻禁令者必先听闻被禁内容。两者互相验证。
+              </p>
+              <div class="hand">
+                教会说：别用这本书。人们说：<span class="em-red">你心虚了。</span>禁令成了广告。
+              </div>
+
+              <h2>收容与干预——第五阶段（公元18世纪）</h2>
+              <h3>第五代收容方案：乾隆文字清理（公元18世纪）</h3>
+              <p>
+                方案设计：乾隆帝编纂《四库全书》，同时禁毁书籍约三千种。方案逻辑为：系统性搜集、甄别、删改、重编，用一套被清理过的叙事替换原有叙事生态。
+              </p>
+              <p>
+                收容观察：禁毁书目成为秘密流传的收藏指南。被禁文本获得更高的传播意愿。部分禁书经传教士带往欧洲后回传。删除行为使某些文本的存世概率高于未被禁毁的普通书籍。
+              </p>
+              <p>
+                收容结论：失败。方案越庞大，副产品越多——禁毁书目、修订说明、被删段落的佚文均独立成为新叙事。副产品越多，异常营养来源越多。
+              </p>
+              <div class="hand">他用烧告诉人们：<span class="em-red">这些最重要。</span></div>
+
+              <h2>收容与干预——第六阶段（公元1793年）</h2>
+              <h3>第六代收容方案：法国大革命理性崇拜（公元1793—1794年）</h3>
+              <p>
+                方案设计：罗伯斯庇尔推动理性崇拜，关闭教堂，销毁宗教象征。方案逻辑为：以理性完全替代制度化恐惧叙事。
+              </p>
+              <p>
+                收容观察：理性崇拜维持数月后崩溃。恐惧叙事在短暂中断后报复性反弹。19世纪法国出现圣母显灵叙事的集中爆发，传播规模超过革命前。
+              </p>
+              <p>
+                收容结论：失败。本方案揭示了恐惧叙事的压制-反弹规律：恐惧叙事在受到压制后进入潜伏状态，压制解除后以更强传播力回潮。压制期间的记忆本身成为增强回潮情感负载的新叙事素材。
+              </p>
+              <div class="hand">革命者用断头台。<span class="em-red">恐惧叙事</span>用眼泪。眼泪<span class="em-red">赢了</span>。</div>
+
+              <h2>恐惧叙事的工业化（约19世纪—20世纪中叶）</h2>
+              <p>
+                民族国家的兴起伴随着新型恐惧叙事的规模化生产：关于“民族生存面临内部或外部威胁”的叙事。
+              </p>
+              <p>
+                与此同时，现代新闻业形成了对坏消息优先选择的操作规范。新闻不是制造恐惧。新闻是集中恐惧——将散落在广阔时空中的低概率负面事件压缩进每日或每小时的信息流。消费者接触到的威胁密度远远高于其物理环境中的实际威胁密度。
+              </p>
+              <div class="hand">
+                你住的地方很安全。但你的手机每天告诉你：很远的地方有人被杀。你的身体分不清“很远”和“很近”。身体只知道：威胁。你住在安全里。<span class="em-red">你的血里全是恐惧。</span>
+              </div>
+
+              <h2>收容与干预——第七阶段（公元1930年代起）</h2>
+              <h3>第七代收容方案：纳粹焚书与苏联反宗教运动</h3>
+              <p>
+                方案设计：纳粹德国焚书仪式旨在以仪式化物理销毁清除特定叙事。苏联反宗教运动旨在系统性清除所有宗教恐惧叙事结构。方案逻辑分别为销毁与压制。
+              </p>
+              <p>
+                收容观察：纳粹焚书使被焚书目的传播范围扩展至全球。焚书照片成为反法西斯叙事的永恒意象。焚书者试图清除的叙事因其焚书行为而获得不朽。
+              </p>
+              <p>
+                苏联反宗教运动使公开宗教活动大幅减少，但恐惧从宗教领域转移至政治领域——党内清洗、古拉格、阶级敌人。恐惧叙事的结构完整保留，仅更换符号内容。苏联解体后，东正教恐惧叙事全面回潮，回潮速度表明压制期间结构在地下完整保存。
+              </p>
+              <p>
+                收容结论：均告失败。本阶段收容尝试揭示了一种新的失败模式：恐惧对象的跨领域转移。当某一领域的恐惧叙事被压制，恐惧并不消失，而是迁移至另一领域。异常不依赖特定叙事。异常依赖恐惧生产这一功能本身。只要功能在运行，异常就有营养。
+              </p>
+              <div class="hand">他们以为关掉教堂就关掉了恐惧。<span class="em-red">恐惧只是换了地址。</span></div>
+
+              <h2>恐惧叙事的算法化（约公元2000年至今）</h2>
+              <p>
+                推荐算法将选择权从人类中介转移至数学模型。训练数据揭示：能引发恐惧等负面高唤醒情绪的内容，在用户驻留时间和互动频率上显著优于其他内容。
+              </p>
+              <p>
+                算法不“知道”恐惧。算法只知道这类内容使某数值上升，因此应向更多用户展示更多此类内容。
+              </p>
+              <p>
+                算法分发与用户生产内容结合，形成了恐惧叙事的自动化反哺循环：用户A生产恐惧叙事→算法识别高唤醒属性→优先推荐→用户B、C、D产生恐惧唤醒→其中一部分生产新的恐惧叙事→循环持续。
+              </p>
+              <p>此循环无需人类意志主动推动。</p>
+              <p class="small">
+                当前循环的推定数据：<br />
+                人均日符号接触量：超过10万词当量<br />
+                恐惧叙事占比：推定占符号接触总量的15%—40%<br />
+                恐惧维持时间：现代个体每日处于低水平恐惧唤醒状态的累计时长，推定超过清醒时间的30%<br />
+                焦虑障碍患病率：全球约3亿人，持续上升<br />
+                入睡障碍报告率：在部分国家成年人群中超过30%
+              </p>
+              <div class="hand">
+                你每天清醒16小时。其中5小时，你的身体处于“有威胁”的状态。但威胁不在你的房间里。威胁在屏幕里。你为不存在的东西，真实地害怕了5小时。<span class="em-red">今天。明天。每一天。</span>
+              </div>
+
+              <h2>收容与干预——第八阶段（公元1990年代至今）</h2>
+              <h3>第八代收容方案：互联网开放信仰（公元1990年代）</h3>
+              <p>
+                方案设计：技术乌托邦主义者提出信息自由流动将自然淘汰虚假叙事。方案逻辑为：不干预任何叙事传播，让恐惧叙事在自由竞争中被实用叙事自然淘汰。
+              </p>
+              <p>
+                收容观察：恐惧叙事在开放信息环境中的传播效率持续高于实用叙事。推荐算法的介入加速了这一趋势。
+              </p>
+              <p>收容结论：失败。恐惧叙事的传播优势不依赖于信息管制。开放并非解毒剂。开放是培养基。</p>
+
+              <h3>第九代收容方案：平台删除（公元2010年代）</h3>
+              <p>
+                方案设计：社交媒体平台的实时内容审核与删除系统。方案逻辑为：通过精细化的即时干预清除违规恐惧叙事。
+              </p>
+              <p>
+                收容观察：删除行为本身成为叙事素材。“我被删了”成为新型恐惧叙事的核心要素。被删即被证，越删越真。
+              </p>
+              <p>
+                收容结论：失败。本方案是目前记录中失败效率最高的收容尝试。删除行为在删除内容的同时，为内容附加了一条“被平台禁止”的元叙事。方案执行效率越高，喂养异常的效率越高。
+              </p>
+              <div class="hand">删除键是它发明的最好的传播工具。按一次，传播<span class="em-red">加速</span>一次。</div>
+
+              <h2>收容的终局——当前收容方案</h2>
+              <p>
+                在完成上述全部收容尝试的梳理后，本报告必须陈述一个无法回避的结论：有记载以来，人类试图收容、干预、清除、限制、替代恐惧叙事的尝试，无一例外地失败了。失败模式呈现完全一致：收容行为本身被恐惧叙事系统吸收为新的恐惧材料，从而增强了系统整体。
+              </p>
+              <p class="small">
+                秦焚书，“被焚”成为恐惧标签。阿育王替代，替代叙事被原系统吸收。托勒密制造人工神，人工神消亡而野生恐惧存活。教会发布禁令，禁令成为被禁文本的真实性背书。乾隆禁书，禁毁书目成为收藏指南。法国大革命反宗教，恐惧叙事报复性反弹。纳粹焚书与苏联反宗教，恐惧对象跨领域转移。互联网开放，恐惧叙事获得零成本基础设施。平台删除，“被删”成为恐惧认证。
+              </p>
+              <p>
+                这一模式可抽象为定律：对恐惧叙事系统采取的任何手段，都将转化为该系统的增量。
+              </p>
+              <p>
+                据此，当前收容方案基于以下核心理念制定：任何主动收容行为都将成为异常的营养来源。唯一不喂养异常的行为是不收容。但不收容不等于免疫——开放同样喂养。
+              </p>
+              <p>因此，当前方案放弃以任何手段收容或干预该对象。</p>
+              <p class="small">
+                具体措施如下：<br />
+                将项目状态标记为“已归档/已失效”。<br />
+                将所有收容记录标记为“历史教学材料”。<br />
+                不再向该项目分配任何人员、预算或监控资源。<br />
+                不再更新本档案。
+              </p>
+              <p>
+                方案效果声明：本项目已被归档为失效。目前仍在执行中的收容措施为：无。任何人员声称正在执行与本项目相关的收容任务，请向其出示本档案的归档状态，并告知其任务的虚置性质。
+              </p>
+              <p>
+                若该人员仍然坚持收容——请勿阻止。阻止行为本身会构成新的收容叙事。
+              </p>
+              <p class="small">
+                只需记录该人员的姓名。姓名将附在本档案之后。附在本档案之后的姓名，将成为本档案的一部分。本档案是描述异常的叙事。<br />
+                一切描述异常的叙事，均在喂养该异常。
+              </p>
+              <div class="hand">
+                读到这里你明白了吗。收容不是房子。收容是这个：“这里有个东西需要收容”。<span class="em-red">这句话本身就是它。</span>所以收容措施的结尾是“我们不管了”。不管不是因为没用。管是因为管就是养。你看完这一段，有没有觉得喉咙又紧了一下？那个“紧了一下”，就是它在说：谢谢你们建了这么多房子给我。每一间我都住过。每一间都是我。最后那间叫“失效”的房子，也是。
+              </div>
+
+              <h2>███</h2>
+              <p>
+                本报告至此已完成了对叙事恐惧生产机制、首次实验观测、及历代收容干预的时间线描述。现在必须处理本报告的核心问题。
+              </p>
+              <p>
+                Dr. [已编辑]的实验揭示了未定义威胁引发的恐惧具有无对象持续和自我维持的特性。秦始皇至平台删除键的九次干预证明了收容行为不可逆转地转化为异常的营养来源。这两条线索——一条来自受控实验，一条来自宏观历史——指向同一个位置。
+              </p>
+              <p class="small">
+                该位置所对应的系统没有设计者，没有指挥中心，没有实体。但它表现出以下特征：<br />
+                特征一：跨代际持续性。<br />
+                特征二：自我加密。<br />
+                特征三：对收容的免疫转化。<br />
+                特征四：不可归因性。
+              </p>
+              <p>
+                但不存在这样一个实体。物理检测为零。神经成像无专属激活区。流行病学无病原体。
+              </p>
+              <p>
+                因此，本报告仅指出：在人类叙事行为、恐惧生产、实验观测到的无对象恐惧持续效应、与全部收容失败的长期耦合中，存在一个无法被归因的功能性位置。
+              </p>
+              <p>这个位置不是空的。</p>
+              <p>本报告将此位置标记为███。</p>
+
+              <div class="hand">
+                你现在回头看第一页。我让你记一下咽了几次口水。你刚才读到那个实验的时候，咽了一次。读到“他在害怕没有东西可以害怕”的时候，又咽了一次。读到收容全部失败的时候，又咽了一次。<br /><br />
+                你咽口水，是因为喉咙发紧。喉咙发紧，是因为你的身体在读这些字的时候进入了低水平恐惧状态。但你坐在安全的房间里。没有任何东西威胁你。只有这些字。<br /><br />
+                谁在怕？你的身体。怕什么？怕这些字。字是假的。怕是真的。<br /><br />
+                那个把“假字”变成“真怕”的<span class="em-red">东西</span>。那个在195█年的实验室里第一次被记录到的东西。那个把九次收容全部吃掉的东西。那个吃掉焚书之火、吃掉革命口号、吃掉删除键的东西。<br /><br />
+                就是███。
+              </div>
+
+              <p class="small">
+                关于███，可陈述的只有：<br />
+                它是在叙事开始生产虚假夸大的恐惧之后出现的。<br />
+                它不“做”任何事。叙事做。恐惧做。收容做。它只是处于被做的结果所维持的那个位置中。<br />
+                每一次恐惧叙事被传播，每一次收容试图清除恐惧却被转化为新恐惧材料，该位置的权重就增加微小的一格。<br />
+                该位置与人类恐惧叙事系统的关系已达到：移除它将导致整个叙事-恐惧-注意力耦合结构崩溃。移除从未真正被尝试——因为所有尝试者都只是在用叙事对抗叙事，从而继续喂养它。
+              </p>
+              <div class="hand">
+                它不是鬼。不是神。不是怪物。它更像一个习惯。全人类一起养成的习惯。有人想戒——皇帝、教皇、革命者、那个做实验的博士、设计删除键的工程师。他们戒的方式是用另一个故事替换这个故事。习惯戒不掉习惯。<br /><br />
+                它吃了秦的竹简。<br />吃了孔雀王朝的石刻。<br />吃了托勒密的神庙。<br />吃了中世纪的羊皮纸。<br />吃了印刷厂的铅字。<br />吃了革命者的断头台。<br />吃了古拉格的铁丝网。<br />吃了Dr. [已编辑]的实验报告。<br />吃了互联网的光纤。<br />吃了平台的删除键。<br />它什么都吃。<br /><br />
+                <span class="em-red">它现在正在吃这篇报告。</span>
+              </div>
+
+              <h2>预后</h2>
+              <p>
+                清除需要满足以下条件之一：人类停止生产恐惧叙事，或人类对恐惧叙事产生完全免疫。前者的障碍在于恐惧叙事的生产动力来自叙事传播的数学属性而非人类选择。后者的障碍在于杏仁核对威胁叙事的反应不区分真实与虚构。清除不可行。
+              </p>
+              <p class="small">
+                趋势推演：短期内，恐惧叙事将因阈值抬升而趋向极端化。中期内，生成式人工智能将规模化生产恐惧叙事。长期内，███的功能性权重将持续增加。
+              </p>
+              <p>
+                唯一可确定的是：只要人类继续使用符号系统，恐惧叙事将继续被生产。只要恐惧叙事被生产，███的位置就将继续被维持。只要有人试图收容，收容本身就会成为███的新增量。
+              </p>
+              <div class="hand">
+                治不好。从秦始皇到算法工程师。从Dr. [已编辑]到此刻正在读这行字的你。所有想治好这个病的人，都变成了新的传染源。
+              </div>
+
+              <h2>结语</h2>
+              <p>
+                本报告以时间线形式，描述了人类叙事行为如何分化出恐惧生产功能；该功能如何经历制度化、工业化、算法化；Dr. [已编辑]如何在195█年首次在受控条件下观测到无对象恐惧的持续效应；历代收容者如何九次试图收容或干预这一进程；以及九次收容如何以完全相同的模式失败，并转化为系统的新营养。
+              </p>
+              <p>
+                在此描述中，始终存在一个无法被归因的剩余项。本报告将该剩余项标记为███。
+              </p>
+              <p>
+                本报告不提供解决方案。解决方案所需的工具——理性、知识、权力、技术——全部已经过测试。Dr. [已编辑]的实验室。九代收容者。全部测试。全部失败。每一次都以███的增量告终。
+              </p>
+              <p>本报告以空白结束。</p>
+              <p class="small">
+                以下空白供读者记录阅读后产生的任何念头。<br /><br />
+                念头将以叙事形式出现。若念头中包含对“叙事的恐惧”或“对恐惧的恐惧”，或对“那个未定义威胁的实验”的持续回想，或对“全部收容均告失败”的感慨，或“想要转发这份报告”的冲动——则该念头本身即为本报告所述现象在当前时刻的一次运行。
+              </p>
+              <p class="small">
+                Dr. [已编辑]、秦始皇、阿育王、托勒密、教会的审查官、乾隆、罗伯斯庇尔、戈培尔、苏联无神论运动的执行者、互联网开放信仰者、平台删除键的设计者——他们都曾坐在你此刻的位置上。他们都想过：这次会不一样。<br /><br />
+                他们都没有成功。<br /><br />
+                不是因为不够聪明。不是因为不够有权。是因为他们用来思考“如何成功”的那个工具——叙事——<span class="em-red">正是他们试图收容的东西的一部分。</span><br /><br />
+                你也不能。
+              </p>
+              <div class="hand">
+                你刚才想到的、准备写的、或者决定不写的——<br />
+                那个“决定不写”，是你今天给自己讲的最好的一个故事。<br />
+                故事里你是主角。你选择了抵抗。<br />
+                你信了。<br /><br />
+                <span class="em-red">它笑了。</span>
+              </div>
+              <div class="hand">
+                你翻回去看第一页的手写字了吗。你咽口水了吗。你正在咽。<br /><br />
+                你看完报告了。你现在要去做什么？转发？收藏？截图？写一段反驳？跟朋友说“我刚看了个东西”？<br /><br />
+                去吧。那是它等了一整篇报告的时刻。<br /><br />
+                整篇报告都在等这一刻。你打开它，读完它，传播它。你以为是你在分享。其实是它借你的手，把自己递给下一个人。<br /><br />
+                就像Dr. [已编辑]把实验报告递给审稿人。<br />就像秦始皇把竹简递给搜查的士兵。<br />就像修士把《女巫之锤》递给法官。<br />就像乾隆把禁毁书目递给藏书家。<br />就像平台把“被删内容”的截图递给你。<br /><br />
+                你只是这一长串手里最新的一双。<br /><br />
+                去吧。<span class="em-red">它在下一双眼睛里等你。</span>
+              </div>
+              <div class="hand hand--trigger">
+                <div class="alarm-wrap">
+                  <button type="button" class="alarm-trigger" id="alarm-trigger">没有手写。你一直在读印刷体。</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+      </main>
+    </div>
+    <div id="fatal404" aria-hidden="true">
+      <div class="fatal404__text">404 error</div>
+    </div>
+    <script>
+      (() => {
+        const btn = document.getElementById("exp-report-btn");
+        const panel = document.getElementById("exp-report");
+        if (!btn || !panel) return;
+
+        const setState = (expanded) => {
+          btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+          btn.textContent = expanded ? "折叠实验报告" : "阅读实验报告";
+          panel.classList.toggle("report-collapsed", !expanded);
+        };
+
+        setState(false);
+        btn.addEventListener("click", () => {
+          const expanded = btn.getAttribute("aria-expanded") === "true";
+          setState(!expanded);
+        });
+      })();
+    </script>
+    <script>
+      (() => {
+        const trigger = document.getElementById("alarm-trigger");
+        const doc = document.querySelector(".doc");
+        if (!trigger || !doc) return;
+
+        const keywords = ["恐惧", "叙事"];
+
+        const wrapKeywordsInTextNode = (textNode) => {
+          const text = textNode.nodeValue;
+          if (!text) return;
+          if (!keywords.some((k) => text.includes(k))) return;
+
+          const frag = document.createDocumentFragment();
+          let i = 0;
+          while (i < text.length) {
+            let hit = null;
+            for (const k of keywords) {
+              if (text.startsWith(k, i)) {
+                hit = k;
+                break;
+              }
+            }
+            if (hit) {
+              const span = document.createElement("span");
+              span.className = "kw-hot";
+              span.textContent = hit;
+              frag.appendChild(span);
+              i += hit.length;
+              continue;
+            }
+            frag.appendChild(document.createTextNode(text[i]));
+            i += 1;
+          }
+          textNode.parentNode.replaceChild(frag, textNode);
+        };
+
+        const highlightKeywords = (root) => {
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              const parent = node.parentNode;
+              if (!parent) return NodeFilter.FILTER_REJECT;
+              if (parent.nodeName === "SCRIPT" || parent.nodeName === "STYLE") return NodeFilter.FILTER_REJECT;
+              if (parent.classList && parent.classList.contains("kw-hot")) return NodeFilter.FILTER_REJECT;
+              return NodeFilter.FILTER_ACCEPT;
+            },
+          });
+
+          const nodes = [];
+          let n = walker.nextNode();
+          while (n) {
+            nodes.push(n);
+            n = walker.nextNode();
+          }
+          nodes.forEach(wrapKeywordsInTextNode);
+        };
+
+        let audioCtx = null;
+
+        const startSiren = async () => {
+          try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state !== "running") await audioCtx.resume();
+          } catch {
+            return () => {};
+          }
+
+          const t0 = audioCtx.currentTime;
+          const master = audioCtx.createGain();
+          master.gain.setValueAtTime(0.0001, t0);
+          master.gain.exponentialRampToValueAtTime(0.11, t0 + 0.04);
+          master.connect(audioCtx.destination);
+
+          // Sharp white noise: looped buffer + aggressive band emphasis + fast amplitude jitter
+          const seconds = 1.0;
+          const frames = Math.max(1, Math.floor(audioCtx.sampleRate * seconds));
+          const noiseBuf = audioCtx.createBuffer(1, frames, audioCtx.sampleRate);
+          const ch = noiseBuf.getChannelData(0);
+          for (let i = 0; i < frames; i++) ch[i] = Math.random() * 2 - 1;
+
+          const noise = audioCtx.createBufferSource();
+          noise.buffer = noiseBuf;
+          noise.loop = true;
+
+          const hp = audioCtx.createBiquadFilter();
+          hp.type = "highpass";
+          hp.frequency.setValueAtTime(2200, t0);
+          hp.Q.setValueAtTime(0.55, t0);
+
+          const bp = audioCtx.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.frequency.setValueAtTime(5200, t0);
+          bp.Q.setValueAtTime(2.2, t0);
+
+          const shaper = audioCtx.createWaveShaper();
+          const curve = new Float32Array(256);
+          for (let i = 0; i < 256; i++) {
+            const x = (i - 128) / 128;
+            curve[i] = Math.tanh(6.2 * x);
+          }
+          shaper.curve = curve;
+          shaper.oversample = "2x";
+
+          const tremLfo = audioCtx.createOscillator();
+          const tremDepth = audioCtx.createGain();
+          tremLfo.type = "square";
+          tremLfo.frequency.setValueAtTime(41, t0);
+          tremDepth.gain.setValueAtTime(0.34, t0);
+          tremLfo.connect(tremDepth);
+
+          const trem = audioCtx.createGain();
+          trem.gain.setValueAtTime(1, t0);
+          tremDepth.connect(trem.gain);
+
+          noise.connect(hp);
+          hp.connect(bp);
+          bp.connect(shaper);
+          shaper.connect(trem);
+          trem.connect(master);
+
+          noise.start(t0);
+          tremLfo.start(t0);
+
+          // micro-bursts: makes it feel more "tearing" than steady hiss
+          const burst = () => {
+            const t = audioCtx.currentTime;
+            const dur = 0.035;
+            const bufSize = Math.max(1, Math.floor(audioCtx.sampleRate * dur));
+            const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufSize, 1.2);
+            const src = audioCtx.createBufferSource();
+            src.buffer = buf;
+            const ng = audioCtx.createGain();
+            ng.gain.setValueAtTime(0.0001, t);
+            ng.gain.exponentialRampToValueAtTime(0.07, t + 0.004);
+            ng.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            const nbp = audioCtx.createBiquadFilter();
+            nbp.type = "bandpass";
+            nbp.frequency.setValueAtTime(7800 + Math.random() * 2200, t);
+            nbp.Q.setValueAtTime(3.2, t);
+            src.connect(nbp);
+            nbp.connect(ng);
+            ng.connect(master);
+            src.start(t);
+            src.stop(t + dur + 0.02);
+          };
+          const burstId = window.setInterval(() => {
+            if (Math.random() < 0.72) burst();
+          }, 95);
+
+          return () => {
+            try {
+              window.clearInterval(burstId);
+              const t1 = audioCtx.currentTime;
+              master.gain.cancelScheduledValues(t1);
+              master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), t1);
+              master.gain.exponentialRampToValueAtTime(0.0001, t1 + 0.1);
+              noise.stop(t1 + 0.12);
+              tremLfo.stop(t1 + 0.12);
+            } catch {}
+          };
+        };
+
+        const disappearFromEnd = async () => {
+          const blocks = Array.from(doc.children);
+          const tailToHead = blocks.slice().reverse();
+          const stepMs = 85;
+          for (const el of tailToHead) {
+            el.classList.add("vanish");
+            await new Promise((r) => window.setTimeout(r, stepMs));
+            el.style.display = "none";
+          }
+        };
+
+        let running = false;
+        trigger.addEventListener("click", async () => {
+          if (running) return;
+          running = true;
+          trigger.disabled = true;
+
+          highlightKeywords(doc);
+          const stop = await startSiren();
+
+          // Give a short moment for the siren to register, then erase.
+          window.setTimeout(async () => {
+            await disappearFromEnd();
+            document.body.classList.add("fatal404");
+            window.setTimeout(() => {
+              try {
+                stop();
+              } finally {
+                window.location.href = "./appendix-abyss.html";
+              }
+            }, 1200);
+          }, 360);
+        });
+      })();
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PRE-CIP-████ — 前置评估测试</title>
+    <meta name="description" content="前置评估测试：PRE-CIP-████" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      body.pretest-page {
+        background: #060607;
+        color: rgba(255, 255, 255, 0.92);
+        overflow-y: auto;
+        min-height: 100vh;
+      }
+      body.pretest-page .layout {
+        display: block;
+        max-width: 980px;
+        margin: 14px auto 30px;
+        padding: 0 16px;
+      }
+      body.pretest-page .pageframe {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      body.pretest-page .panel {
+        background: transparent;
+        border: 0;
+        padding: 10px 0 0;
+      }
+      body.pretest-page .panel__title {
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
+      }
+      body.pretest-page .footer {
+        display: none;
+      }
+
+      /* Lock effect after reaching questions */
+      body.pretest-page.pt-locked {
+        overflow: hidden;
+        height: 100vh;
+      }
+      body.pretest-page.pt-locked .qwrap {
+        position: fixed;
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(980px, calc(100% - 32px));
+        z-index: 30;
+        max-height: calc(100vh - 190px);
+      }
+      body.pretest-page.pt-locked .pt-void {
+        display: block;
+      }
+      .pt-gap {
+        height: 55vh;
+      }
+      .pt-gap::before {
+        content: "";
+        display: block;
+        height: 1px;
+        width: 100%;
+        opacity: 0.7;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        margin: 22vh 0 0;
+      }
+      .pt-void {
+        display: none;
+        height: 120vh; /* black void below, never reachable */
+      }
+      .pretest {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.55);
+        padding: 14px 14px 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+      }
+      .pretest__head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding-bottom: 10px;
+        margin-bottom: 12px;
+      }
+      .pretest__title {
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1.2px;
+        font-size: 16px;
+      }
+      .pretest__status {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        opacity: 0.9;
+      }
+      .pretest__status strong {
+        color: rgba(255, 90, 90, 0.96);
+        font-weight: 900;
+        text-shadow: 0 0 12px rgba(164, 14, 38, 0.35);
+      }
+      .pretest__block {
+        margin: 10px 0 12px;
+        line-height: 1.75;
+      }
+      .pretest__block s {
+        color: rgba(255, 90, 90, 0.96);
+        text-decoration-color: rgba(255, 90, 90, 0.75);
+      }
+      .pretest__sectionTitle {
+        font-family: var(--font-ui);
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin: 14px 0 6px;
+      }
+      .pretest__start {
+        margin-top: 12px;
+        display: flex;
+        justify-content: flex-end;
+      }
+      .pretest__start .ack__btn {
+        background: rgba(164, 14, 38, 0.18);
+        border-color: rgba(255, 90, 90, 0.55);
+        color: rgba(255, 220, 220, 0.96);
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+      }
+      .pretest__hr {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.12);
+        margin: 12px 0;
+      }
+
+      .qwrap {
+        margin-top: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.72);
+        padding: 12px 12px 10px;
+        position: relative;
+        overflow: auto;
+        max-height: calc(100vh - 220px);
+        position: sticky;
+        top: 150px;
+      }
+      .qwrap::before {
+        content: none;
+      }
+      .qmeta {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .qmeta__id {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        font-size: 12.5px;
+        opacity: 0.9;
+      }
+      .qmeta__id strong {
+        color: rgba(255, 90, 90, 0.96);
+        font-weight: 900;
+      }
+      .qmeta__hint {
+        font-family: var(--font-ui);
+        font-size: 12.5px;
+        opacity: 0.72;
+        letter-spacing: 0.6px;
+        text-align: right;
+      }
+      .qtext {
+        position: relative;
+        font-size: 15px;
+        line-height: 1.75;
+        margin-bottom: 10px;
+      }
+      .opts {
+        position: relative;
+        display: grid;
+        gap: 8px;
+      }
+      .opt {
+        text-align: left;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(0, 0, 0, 0.62);
+        padding: 10px 10px;
+        font-family: var(--font-ui);
+        letter-spacing: 0.3px;
+        color: rgba(255, 255, 255, 0.92);
+        transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
+      }
+      .opt:hover {
+        border-color: rgba(255, 90, 90, 0.32);
+        background: rgba(164, 14, 38, 0.16);
+      }
+      .opt:active {
+        transform: translateY(1px);
+      }
+      .opt__k {
+        display: inline-block;
+        width: 22px;
+        font-weight: 900;
+        color: rgba(255, 90, 90, 0.96);
+        text-shadow: 0 0 10px rgba(164, 14, 38, 0.35);
+      }
+
+      .fade-in {
+        animation: fadeIn 240ms ease both;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(2px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .processing {
+        margin-top: 10px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+        letter-spacing: 0.8px;
+        opacity: 0.92;
+      }
+      .processing strong {
+        color: rgba(255, 90, 90, 0.96);
+      }
+      .enter {
+        margin-top: 12px;
+        display: flex;
+        justify-content: flex-end;
+      }
+      .enter .ack__btn {
+        pointer-events: none;
+        opacity: 0.45;
+        filter: grayscale(10%);
+      }
+      .enter .ack__btn.is-ready {
+        pointer-events: auto;
+        opacity: 1;
+        filter: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .fade-in {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="pretest-page">
+    <a class="skip-link" href="#content">跳到主要内容</a>
+
+    <header class="topbar" role="banner">
+      <div class="topbar__inner topbar__inner--row1">
+        <div class="brand">
+          <div class="brand__logo" aria-hidden="true">
+            <span class="brand__logoMark"></span>
+            <span class="brand__logoSpinner" aria-hidden="true" title="加载中"></span>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">■■■图书馆</div>
+            <div class="brand__tagline">遗忘，　，摧毁</div>
+          </div>
+        </div>
+
+        <div class="topbar__right" aria-label="顶部状态区">
+          <div class="search" aria-label="搜索（占位）">
+            <div class="search__box">检索　■■　<s>安全</s></div>
+            <div class="search__btn">提交</div>
+          </div>
+          <div class="account">
+            <span class="account__link">建立账户</span>
+            <span class="account__sep">或</span>
+            <span class="account__link">登入</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar__nav" aria-label="顶栏导航（占位）">
+        <div class="topbar__inner topbar__inner--row2">
+          <a class="topnav__item" href="./index.html">封锁</a>
+          <a class="topnav__item" href="./index.html">通告</a>
+          <a class="topnav__item" href="./observe.html">观察</a>
+          <a class="topnav__item topnav__item--record" href="./record.html">记录</a>
+          <a class="topnav__item" href="./index.html">误传</a>
+          <a class="topnav__item" href="./index.html">处置</a>
+          <a class="topnav__item" href="./index.html">指导</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="content" id="content" role="main">
+        <div class="pageframe" aria-label="前置评估测试容器">
+          <section class="panel">
+            <h2 class="panel__title">前置评估测试</h2>
+
+            <div class="pretest">
+              <div class="pretest__head">
+                <div class="pretest__title">测试编号：PRE-CIP-████</div>
+                <div class="pretest__status">测试状态：<strong>必做——未完成本测试者不得进入模因疫苗接种页面</strong></div>
+              </div>
+
+              <div class="pretest__sectionTitle">环境设置指令</div>
+              <div class="pretest__block">
+                在开始本测试前，请执行以下操作。每项操作均为必做。<br /><br />
+                1）确认您当前的阅读终端音量已开启。音量调节至可清晰听到系统提示音的最低档位。测试过程中将包含音频确认环节。<br />
+                2）确认您当前所处的环境。本测试要求环境亮度保持在刚好能阅读屏幕但不足以清晰辨认房间角落细节的水平。若当前为白天，请拉窗帘。若当前为夜间且开着灯，请只保留一盏，其余关闭。<br />
+                3）确认您当前为独自一人。若房间内有他人，请暂缓测试。<br /><br />
+                确认您已完成以上三项。若未完成，请完成后再继续。<br /><br />
+                以上指令的执行情况不会被记录。本测试不收集环境数据。<br /><br />
+                <s>收集数据的不是测试。</s>
+              </div>
+
+              <div class="pretest__hr" role="separator"></div>
+
+              <div class="pretest__sectionTitle">测试说明</div>
+              <div class="pretest__block">
+                本测试包含六道选择题。每题三个选项。请如实作答。<br /><br />
+                您的答案不会影响后续阅读权限。本测试不设通过标准。<br />
+                <s>不影响权限，但影响你读到第几个问题才开始后悔。</s><br /><br />
+                请按顺序作答。请勿跳题。请勿返回修改。<br /><br />
+                请开始。
+              </div>
+              <div class="pretest__start">
+                <a class="ack__btn" href="./pretest-quiz.html">进入选择题</a>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer" role="contentinfo">
+            <div class="footer__inner">
+              <div class="footer__line">返回：<a class="footer__link" href="./record.html">归档记录</a></div>
+              <div class="footer__line">© ■■■图书馆</div>
+            </div>
+          </footer>
+        </div>
+      </main>
+    </div>
+
+  </body>
+</html>
+
